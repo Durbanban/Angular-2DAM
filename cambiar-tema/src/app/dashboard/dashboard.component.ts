@@ -7,8 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  icon='dark_mode';
-  style='light-mode';
+  icon='dark-mode';
 
   constructor() { }
 
@@ -16,6 +15,10 @@ export class DashboardComponent implements OnInit {
   }
 
   changeMode() {
-    
+    if(this.icon=='dark-mode') {
+    this.icon='light-mode';
+    }else if(this.icon=='light-mode') {
+      this.icon='dark-mode';
+    }
   }
 }

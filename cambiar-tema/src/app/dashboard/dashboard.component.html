@@ -1,8 +1,7 @@
-<div class="page" [class]="style">
+<div class="page">
 
-<mat-icon (click)="changeMode()" aria-hidden="false" aria-label="light" fontIcon="light_mode"></mat-icon>
-<mat-icon aria-hidden="false" aria-label="dark" fontIcon="dark_mode"></mat-icon>
-
+<mat-icon (click)="changeMode()" aria-hidden="false" aria-label="light" [fontIcon]="icon"></mat-icon>
+<mat-icon (click)="changeMode()">{{icon}}</mat-icon>
 
 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque explicabo modi corrupti nobis voluptas amet porro ab maxime vitae, eaque dolore officia, quisquam facilis unde facere odio natus molestias mollitia.</p>
 
