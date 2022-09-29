@@ -1,0 +1,11 @@
+.header h1 {
+    font-size: 3em;
+    color: brown;
+}
+
+.header {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    margin-top: 50px;
+}
