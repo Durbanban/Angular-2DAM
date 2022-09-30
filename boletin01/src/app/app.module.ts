@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialImportsModule } from './material-imports/material-imports.module';
 import { Ej01LoginComponent } from './components/ej01-login/ej01-login.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { Ej01LoginComponent } from './components/ej01-login/ej01-login.component
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MaterialImportsModule
+    MaterialImportsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

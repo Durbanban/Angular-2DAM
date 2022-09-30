@@ -4,5 +4,14 @@
             <mat-label>Introduce tu Email</mat-label>
             <input matInput type="email" placeholder="john-papaso@angular.com">
         </mat-form-field>
+        <mat-form-field class="passw">
+            <mat-label>Introduce una contraseña</mat-label>
+            <input matInput [type]="oculta">
+            <mat-icon matSuffix (click)="cambiarOjito()" class="visibilidad">{{ojito}}</mat-icon>
+        </mat-form-field>
+        <div class="check">
+            <mat-checkbox name="terminos" [(ngModel)]="deshabilitado">Acepto los términos y condiciones</mat-checkbox>
+        </div>
+        <button mat-raised-button color="primary" [disabled]="!deshabilitado">Enviar</button>
     </form>
 </div>
