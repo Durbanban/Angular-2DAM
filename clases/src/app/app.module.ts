@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialImportsModule } from './material-imports/material-imports.module';
+import { ListaProfesoresComponent } from './components/lista-profesores/lista-profesores.component';
 import { FormsModule } from '@angular/forms';
-import { Ej01LoginComponent } from './components/ej01-login/ej01-login.component';
-import { Ej02CajaComponent } from './components/ej02-caja/ej02-caja.component';
-
+import { StudentListComponent } from './components/student-list/student-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    Ej01LoginComponent,
-    Ej02CajaComponent
+    ListaProfesoresComponent,
+    StudentListComponent
   ],
   imports: [
     BrowserModule,

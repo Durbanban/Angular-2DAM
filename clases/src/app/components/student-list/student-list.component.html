@@ -1,0 +1,12 @@
+<mat-list>
+    <div mat-subheader>Estudiantes</div>
+    <mat-list-item *ngFor="let student of studentList">
+      <mat-icon mat-list-icon>{{definirGenero(student)}}</mat-icon>
+      <div mat-line>{{student.surname}},</div>
+      <div mat-line> {{student.name}} </div>
+      <div mat-line> {{student.age}} </div>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </mat-list>
+  <button mat-button (click)="ordenarLista()">ORDENAR</button>
+  
