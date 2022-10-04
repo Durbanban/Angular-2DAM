@@ -1,0 +1,15 @@
+.ejercicio3 {
+    width: 60%;
+    margin: auto;
+}
+
+.tabla {
+    width: 100%;
+}
+
+.checkboxes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: auto;
+}

@@ -1,5 +1,5 @@
 .ejercicio2 {
-    width: 40%;
+    width: 60%;
     margin: auto;
 }
 
@@ -7,6 +7,8 @@
     display: flex;
     justify-content: space-between;
     border: 2px solid red;
+    width: 50%;
+    margin: auto;
 }
 
 .margenNoVisible {
@@ -14,6 +16,8 @@
     justify-content: space-between;
     border: 2px solid red;
     border-bottom: none;
+    width: 50%;
+    margin: auto;
 }
 
 .bodyVisible {
@@ -21,6 +25,8 @@
     box-shadow: 5px;
     border: 2px solid red;
     border-top: none;
+    width: 50%;
+    margin: auto;
 }
 
 .bodyNoVisible {

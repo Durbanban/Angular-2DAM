@@ -1,1 +1,41 @@
-<p>ej03-tabla works!</p>
+<div class="ejercicio3">
+    <h2>EJERCICIO 3</h2>
+    
+    <section class="checkboxes">
+        <mat-checkbox checked (click)="borrarColumnas()">Nombre</mat-checkbox>
+        <mat-checkbox checked>Apellidos</mat-checkbox>
+        <mat-checkbox checked>Fecha de nacimiento</mat-checkbox>
+        <mat-checkbox checked>Curso matriculado</mat-checkbox>
+    </section>
+    <table mat-table [dataSource]="lista" class="tabla">
+    <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let alumno"> {{alumno.nombre}} </td>
+        </ng-container>
+        <ng-container matColumnDef="surname">
+            <th mat-header-cell *matHeaderCellDef> Apellidos </th>
+            <td mat-cell *matCellDef="let alumno"> {{alumno.apellidos}} </td>
+        </ng-container>
+        <ng-container matColumnDef="birthdate">
+            <th mat-header-cell *matHeaderCellDef> Fecha de nacimiento </th>
+            <td mat-cell *matCellDef="let alumno"> {{alumno.fechaNacimiento}} </td>
+        </ng-container>
+        <ng-container matColumnDef="course">
+            <th mat-header-cell *matHeaderCellDef> Curso matriculado </th>
+            <td mat-cell *matCellDef="let alumno"> {{alumno.curso}} </td>
+        </ng-container>
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let alumno">
+                <button mat-mini-fab color="primary" (click)="editarAlumno(alumno)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-mini-fab color="warn" (click)="borrarAlumno(alumno)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+    </table>
+</div>

@@ -1,5 +1,5 @@
 .loginForm {
-    width: 40%;
+    width: 60%;
     margin: auto;
     align-items: center;
 }
@@ -7,5 +7,7 @@
 .formulario {
     display: flex;
     flex-direction: column;
+    width: 50%;
+    margin: auto;
 }
 
