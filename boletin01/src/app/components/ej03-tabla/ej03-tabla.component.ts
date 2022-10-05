@@ -36,8 +36,8 @@ export class Ej03TablaComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  borrarColumnas() {
-    /*EN CONSTRUCCIÓN*/
+  borrarColumnas(index: number) {
+    
   }
 
   borrarAlumno(alumno: Alumno) {
