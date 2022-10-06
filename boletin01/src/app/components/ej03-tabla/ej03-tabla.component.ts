@@ -26,18 +26,24 @@ export class Ej03TablaComponent implements OnInit {
 
   
   columnas: string[] = ['name', 'surname', 'birthdate', 'course', 'acciones'];
+  borradas: string[] = []
   lista=ALUMNOS;
   
-  @ViewChild(MatTable)
-  table!: MatTable<Alumno>;
+  @ViewChild(MatTable) table!: MatTable<Alumno>;
   
   constructor() { }
   
   ngOnInit(): void {
   }
 
-  borrarColumnas(index: number) {
-    
+  borrarColumnas(nombre: string) {
+    if(this.borradas.indexOf(nombre) == -1) {
+      this.columnas.splice(this.columnas.indexOf(nombre), 1);
+      this.borradas.push(nombre);
+    }else if (this.borradas.indexOf(nombre) != -1) {
+      this.borradas.splice(this.borradas.indexOf(nombre), 1);
+      this.columnas.push(nombre);
+    }
   }
 
   borrarAlumno(alumno: Alumno) {
