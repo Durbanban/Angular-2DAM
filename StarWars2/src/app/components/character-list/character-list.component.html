@@ -9,7 +9,7 @@
         <mat-card-title>{{personaje.name}}</mat-card-title>
         <mat-card-subtitle>{{personaje.birth_year}}</mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image src={{personaje.url}} alt="Photo of a Shiba Inu">
+        <img mat-card-image [src]="getFotoPersonaje(personaje)" alt={{personaje.name}}>
         <mat-card-content>
         <p>{{personaje.mass}} Kg</p>
         </mat-card-content>

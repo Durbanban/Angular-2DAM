@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { PokemonResponse } from '../interfaces/pokemon-response.interface';
+import { Pokemon, PokemonResponse } from '../interfaces/pokemon-response.interface';
 import { Observable } from 'rxjs';
+import { PokemonDetailResponse } from '../interfaces/pokemon-details.interface';
 
 const API_BASE_URL = 'https://pokeapi.co/api/v2';
 
@@ -19,6 +20,15 @@ export class PokemonService {
 
   //TODO
   public getPokemon(id: string) {
-    return this.http.get(`${API_BASE_URL}/pokemon/${id}`)
+    return this.http.get(`${API_BASE_URL}/pokemon/${id}`);
   }
+
+  public getPokemonDetails(pokemon: Pokemon): Observable<PokemonDetailResponse> {
+    let id = pokemon.url.split("/").reverse()[1];
+    return this.http.get<PokemonDetailResponse>(`${API_BASE_URL}/pokemon/${id}`);
+  }
+
+
+
+
 }

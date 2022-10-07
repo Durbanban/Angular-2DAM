@@ -5,3 +5,24 @@
 </ul>
 
 <h1>LISTADO SERIO DE POKÉMON</h1>
+
+<div class="container">
+    <mat-card class="tarjeta" *ngFor="let pokemon of listadoPokemon">
+        <mat-card-header>
+        <mat-card-title>{{pokemon.name}}</mat-card-title>
+        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="getPokemonPhoto(pokemon)" alt="Photo of {{pokemon.name}}">
+        <mat-card-content>
+        <p>
+            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+            bred for hunting.
+        </p>
+        </mat-card-content>
+        <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="getPokemonDetails(pokemon)">+INFO</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+    

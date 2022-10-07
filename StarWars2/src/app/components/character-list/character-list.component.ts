@@ -8,19 +8,19 @@ import { CharacterService } from 'src/app/services/character.service';
   styleUrls: ['./character-list.component.css']
 })
 export class CharacterListComponent implements OnInit {
-
+  
   characterList: Character[] = [];
-
+  
   constructor(private characterService: CharacterService) { }
-
+  
   ngOnInit(): void {
     this.characterService.getCharacters().subscribe(c => {
       this.characterList = c.results;
     })
   }
-
-  mostrarPersonajes() {
-
+  
+  getFotoPersonaje(personaje: Character) {
+    //INTENTAR SIN MIRAR
   }
 
 }
