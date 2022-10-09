@@ -16,4 +16,5 @@ export class PokemonInfoDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
 }

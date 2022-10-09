@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CharacterResponse } from '../interfaces/character.interface';
+import { FilmResponse } from '../interfaces/film.interface';
 
 
 
@@ -14,7 +15,7 @@ export class FilmService {
 
   constructor(private http: HttpClient) { }
 
-  public getFilms(): Observable<CharacterResponse> {
-    return this.http.get<CharacterResponse>(`${API_BASE_URL}/films/`);
+  public getFilms(): Observable<FilmResponse> {
+    return this.http.get<FilmResponse>(`${API_BASE_URL}/films/`);
   }
 }

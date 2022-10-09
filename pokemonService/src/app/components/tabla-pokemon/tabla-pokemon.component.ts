@@ -13,7 +13,10 @@ import { PokemonInfoDialogComponent } from '../pokemon-info-dialog/pokemon-info-
 export class TablaPokemonComponent implements OnInit {
   
   listadoPokemon: Pokemon[] = [];
+  listadoPokemonDetallado: PokemonDetailResponse[] = [];
   pokemonElegido: PokemonDetailResponse | undefined;
+  tipos: string[] = []
+
   constructor(private pokeService: PokemonService, public dialog: MatDialog) { }
   
   ngOnInit(): void {
@@ -30,6 +33,7 @@ export class TablaPokemonComponent implements OnInit {
 
   getPokemonDetails(pokemon: Pokemon) {
     this.pokeService.getPokemonDetails(pokemon).subscribe(respuesta => {
+      respuesta.height = respuesta.height * 30,48;
       this.pokemonElegido = respuesta;
       this.dialog.open(PokemonInfoDialogComponent, {
         data: {
@@ -39,6 +43,7 @@ export class TablaPokemonComponent implements OnInit {
       });
     })
   }
+
 
 
 

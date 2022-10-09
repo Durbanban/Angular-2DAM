@@ -1,17 +1,20 @@
 
-<mat-list>
-    <mat-list-item *ngFor="let personaje of characterList">{{personaje.name}} | {{personaje.films}}</mat-list-item>
-</mat-list>
 <div class = "container">
     <mat-card class="tarjeta" *ngFor="let personaje of characterList">
         <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
         <mat-card-title>{{personaje.name}}</mat-card-title>
-        <mat-card-subtitle>{{personaje.birth_year}}</mat-card-subtitle>
+        <mat-card-subtitle>Fecha de nacimiento: {{personaje.birth_year}}</mat-card-subtitle>
         </mat-card-header>
         <img mat-card-image [src]="getFotoPersonaje(personaje)" alt={{personaje.name}}>
         <mat-card-content>
-        <p>{{personaje.mass}} Kg</p>
+        <mat-card-content>Peso: {{personaje.mass}} Kg</mat-card-content>
+        <mat-card-content>Planeta de origen: {{personaje.homeworld}}</mat-card-content>
+        <mat-card-footer>Películas
+            <ul>
+                <li></li>
+            </ul>
+        </mat-card-footer>
+
         </mat-card-content>
     </mat-card>
 </div>
