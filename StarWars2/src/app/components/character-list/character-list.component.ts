@@ -19,8 +19,8 @@ export class CharacterListComponent implements OnInit {
   filmList: Film[] = [];
   planetList: Planet[] = [];
   speciesList: Species[] = []
-  speciesSubList = this.speciesList.slice
   pagina = 1;
+  page!: number;
   
   constructor(private characterService: CharacterService, 
     private filmService: FilmService, 
@@ -92,11 +92,11 @@ export class CharacterListComponent implements OnInit {
       this.pagina = 2;
     }
     else if(eleccion == 3) {
-      subLista = this.speciesList.slice(22, 33);
+      subLista = this.speciesList.slice(22, 32);
       this.pagina = 3;
     }
     else if(eleccion == 4) {
-      subLista = this.speciesList.slice(34, (this.speciesList.length));
+      subLista = this.speciesList.slice(33, 40);
       this.pagina = 4;
     }
 

@@ -19,15 +19,10 @@
 </div>-->
 <div>
     <h2>Especies</h2>
-    <mat-button-toggle-group name="paginador" aria-label="Paginador">
-    <mat-button-toggle value="1" (click)="mostrarPaginacionEspecies(1)">1</mat-button-toggle>
-    <mat-button-toggle value="2" (click)="mostrarPaginacionEspecies(2)">2</mat-button-toggle>
-    <mat-button-toggle value="3" (click)="mostrarPaginacionEspecies(3)">3</mat-button-toggle>
-    <mat-button-toggle value="4" (click)="mostrarPaginacionEspecies(4)">4</mat-button-toggle>
-    </mat-button-toggle-group>
+    <pagination-controls (pageChange)="page=$event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
 </div>
 <div class = "container">
-    <mat-card class = "tarjeta" *ngFor="let especie of mostrarPaginacionEspecies(pagina)">
+    <mat-card class = "tarjeta" *ngFor="let especie of speciesList | paginate:{itemsPerPage:10, currentPage:page}">
         <mat-card-header>
             <mat-card-title>{{especie.name}}</mat-card-title>
             <mat-card-subtitle>{{especie.classification}}</mat-card-subtitle>
@@ -35,6 +30,7 @@
         <img mat-card-image [src]="getFotoEspecie(especie)" alt={{especie.name}}>
     </mat-card>
 </div>
+<h1>{{speciesList.length}}</h1>
 
 
 

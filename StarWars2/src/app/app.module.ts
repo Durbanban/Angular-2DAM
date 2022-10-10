@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CharacterListComponent } from './components/character-list/character-list.component';
 import { MaterialImportsModule } from './material-imports/material-imports.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { MaterialImportsModule } from './material-imports/material-imports.modul
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    MaterialImportsModule
+    MaterialImportsModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
