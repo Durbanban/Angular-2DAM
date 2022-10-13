@@ -13,6 +13,7 @@ import { VehicleComponent } from './components/vehicle/vehicle.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { MaterialImportsModule } from './material-imports/material-imports.module';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialImportsModule
+    MaterialImportsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
