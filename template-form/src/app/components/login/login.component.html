@@ -1,0 +1,20 @@
+<!--<form action="">
+    <input type="email" [(ngModel)]="emailFormControl">
+    <input type="password" [(ngModel)]="passwordFormControl">
+    <input type="submit">
+</form>-->
+
+<!--<form action="">
+    <input type="email" [formControl]="emailFormControl"> SIN AGRUPAR ELEMENTOS
+    <input type="password" [formControl]="passwordFormControl">
+    <input type="submit">
+</form>-->
+
+<form action="" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <label for="email">Email</label>
+    <input type="email" formControlName="emailFormControl"> <!--AGRUPANDO ELEMENTOS-->
+    <label for="password">Password</label>
+    <input type="password" formControlName="passwordFormControl">
+    <label for="submit">Enviar</label>
+    <input type="submit" value="Login" [disabled]="!formulario.valid">
+</form>
