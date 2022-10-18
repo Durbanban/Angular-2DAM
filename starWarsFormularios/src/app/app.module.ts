@@ -23,6 +23,7 @@ import { FilmDetailsComponent } from './components/film-details/film-details.com
 import { VehicleDetailsComponent } from './components/vehicle-details/vehicle-details.component';
 import { NewCharacterComponent } from './components/new-character/new-character.component';
 import { EditCharacterComponent } from './components/edit-character/edit-character.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,8 @@ import { EditCharacterComponent } from './components/edit-character/edit-charact
     BrowserAnimationsModule,
     MaterialImportsModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

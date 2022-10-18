@@ -1,1 +1,52 @@
-<p>new-character works!</p>
+<app-header></app-header>
+<!--<form class = "formulario" action = "" [formGroup]="characterCreateForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+        <mat-label for="name">Nombre</mat-label>
+        <input matInput type="text" formControlName="nameFormControl">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Altura</mat-label>
+        <input matInput>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Peso</mat-label>
+        <input matInput>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Color de pelo</mat-label>
+        <input matInput>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Color de piel</mat-label>
+        <input matInput>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Color de ojos</mat-label>
+        <input matInput>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Año de nacimiento</mat-label>
+        <input matInput>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Género</mat-label>
+        <mat-select>
+            <mat-option>Masculino</mat-option>
+            <mat-option>Femenino</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Color de ojos</mat-label>
+        <input matInput>
+    </mat-form-field>
+    <button style="width: 25%; margin:auto; margin-bottom: 10px;" mat-raised-button color="primary" type="submit" [disabled]="!characterCreateForm.valid">Crear</button>
+</form>-->
+
+<div class = "container">
+    <mat-card class="tarjeta" *ngFor="let planeta of planetList">
+        <img mat-card-image src="https://starwars-visualguide.com/assets/img/placeholder.jpg" alt={{planeta.name}}>
+        <mat-card-content>{{planeta.name}}</mat-card-content>
+        <mat-card-footer><button mat-raised-button color="warn" class="info">+INFO</button></mat-card-footer>
+    </mat-card>
+</div>
+

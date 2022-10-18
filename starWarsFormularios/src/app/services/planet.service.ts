@@ -33,4 +33,22 @@ export class PlanetService {
     return filmList;
     
   }
+
+  public getAllPlanets(): Observable<PlanetResponse>[] {
+    let planetList: Observable<PlanetResponse>[] = [];
+    let flag = false;
+    let contador = 1;
+    while(flag) {
+      planetList.push(this.http.get<PlanetResponse>(`${environment.apiBaseUrl}planets?page=${contador}`));
+      if(this.http.get<PlanetResponse>(`${environment.apiBaseUrl}planets?page=${contador}`).subscribe(respuesta => {
+        respuesta.next != null
+      })) {
+        contador++;
+        planetList.push(this.http.get<PlanetResponse>(`${environment.apiBaseUrl}planets?page=${contador}`))
+      }else {
+        flag = true;
+      }
+    }
+    return planetList;
+  }
 }

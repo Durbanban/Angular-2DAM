@@ -1,0 +1,8 @@
+.formulario {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    margin: auto;
+    margin-top: 15px;
+    background-color: white;
+}
