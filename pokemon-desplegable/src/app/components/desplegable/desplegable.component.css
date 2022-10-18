@@ -1,0 +1,9 @@
+.desplegable {
+    width: 40%;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

@@ -1,0 +1,14 @@
+
+<div class = "desplegable">
+    <mat-form-field appearance="fill">
+        <mat-label>Selecciona un pokemon</mat-label>
+        <mat-select [(ngModel)]="pokemonSelected">
+        <mat-option *ngFor="let pokemon of listaPokemon" [value]="pokemon">{{pokemon.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div class = "seleccionado">
+        <p *ngIf="pokemonSelected.url != null" >¡¡{{pokemonSelected.name}}, te elijo a ti!!</p>
+        <img *ngIf="pokemonSelected.url != null" src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEg8pgw-b89nj3SLbMFmXms7kebYJSWc0Z4Q&usqp=CAU">
+        <img *ngIf="pokemonSelected.url != null" [src]="getPhotoPokemon(pokemonSelected)">
+    </div>
+</div>
