@@ -1,0 +1,20 @@
+<app-header></app-header>
+<div class="mainContainer">
+    <div class="navigate">
+        <div>
+            <a routerLink="/landing" routerLinkActive="active" class="inicio"><span>Inicio</span></a><span class="especies">/ Especies</span>
+        </div>
+        <mat-button-toggle-group name="paginacionEspecies" aria-label="Paginación de especies" class="pagination">
+            <mat-button-toggle [disabled]="page == 1" (click)="getSpeciesPage(page-1)">&#60;</mat-button-toggle>
+            <mat-button-toggle [checked]="page == i+1" *ngFor="let pagina of contadorPaginas(); let i = index" (click)="getSpeciesPage(i+1)">{{i+1}}</mat-button-toggle>
+            <mat-button-toggle [disabled]="page == 4" (click)="getSpeciesPage(page+1)">&#62;</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+    <div class="container">
+        <mat-card class="tarjeta" *ngFor="let especie of speciesList">
+            <img mat-card-image [src]="getFotoEspecie(especie)" onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder.jpg'" alt="{{especie.name}}">
+            <mat-card-content>{{especie.name}}</mat-card-content>
+            <mat-card-footer><button mat-raised-button color="warn" class="info" routerLink="/species-details/{{idEspecie}}" routerLinkActive="active">+INFO</button></mat-card-footer>
+        </mat-card>
+    </div>
+</div>

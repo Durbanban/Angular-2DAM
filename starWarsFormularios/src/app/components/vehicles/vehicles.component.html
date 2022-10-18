@@ -1,0 +1,20 @@
+<app-header></app-header>
+<div class="mainContainer">
+    <div class="navigate">
+        <div>
+        <a routerLink="/landing" routerLinkActive="active" class = "inicio"><span>Inicio</span></a><span class = "personajes"> / Vehículos</span>
+        </div>
+        <mat-button-toggle-group name="paginacionPlanetas" aria-label="Paginación de planetas" class="pagination">
+            <mat-button-toggle [disabled]="page == 1" (click)="getVehiclesPage(page-1)">&#60;</mat-button-toggle>
+            <mat-button-toggle [checked]="page == i+1" *ngFor="let pagina of contadorPaginas(); let i = index" (click)="getVehiclesPage(i+1)">{{i+1}}</mat-button-toggle>
+            <mat-button-toggle [disabled]="page == 4" (click)="getVehiclesPage(page+1)">&#62;</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+    <div class = "container">
+        <mat-card class="tarjeta" *ngFor="let vehicle of listadoVehiculos">
+            <img mat-card-image [src]="getPhotoURL(vehicle)" onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder.jpg'" alt={{vehicle.name}}>
+            <mat-card-content>{{vehicle.name}}</mat-card-content>
+            <mat-card-footer><button mat-raised-button color="warn" class="info" routerLink="/vehicle-details/{{idVehiculo}}" routerLinkActive="active">+INFO</button></mat-card-footer>
+        </mat-card>
+    </div>
+</div>

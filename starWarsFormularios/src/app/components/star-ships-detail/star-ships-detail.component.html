@@ -1,0 +1,48 @@
+<app-header></app-header>
+<div class = "mainContainer">
+    <div>
+        <a routerLink="/landing" routerLinkActive="active" class = "inicio"><span>Inicio</span></a><a routerLink="/starships" routerLinkActive="active"><span> / starships</span></a><span class="personaje"> / {{starShip.name}}</span>
+    </div>
+    <div class="info">
+        <img class="fotoStarship" [src]="getPhotoURL(starShip)" onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder.jpg'" alt="{{starShip.name}}">
+        <div>
+            <ul>
+                <h2>{{starShip.name}}</h2>
+                <li>Model: {{starShip.model}}</li>
+                <li>Manufacturer: {{starShip.manufacturer}}</li>
+                <li>Class: {{starShip.starship_class}}</li>
+                <li>Cost: {{starShip.cost_in_credits}} credits</li>
+                <li>Speed: {{starShip.max_atmosphering_speed}} km/h</li>
+                <li>Hyperdrive Rating: {{starShip.hyperdrive_rating}}</li>
+                <li>MGLT: {{starShip.MGLT}}</li>
+                <li>Length: {{starShip.length}}</li>
+                <li>MGLT: {{starShip.MGLT}}</li>
+                <li>Length: {{starShip.length}}</li>
+                <li>Cargo capacity: {{starShip.cargo_capacity}} metric tons</li>
+                <li>Passengers: {{starShip.passengers}}</li>
+
+              </ul>
+        </div>
+    </div>
+    <div class = "related">
+        <mat-card class="tarjeta">
+            <mat-card-title>Películas relacionadas</mat-card-title>
+            <div class = "relatedContainer">
+                <div class="peli" *ngFor="let peli of starShipFilmList">
+                    <img mat-card-avatar [src]="getFotoPelicula(peli)" onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder-small.jpg'">
+                    <mat-card-content class = "titulo"><a routerLink="/film-details/{{idFilm}}" routerLinkActive="active">{{peli.title}}</a></mat-card-content>
+                </div>
+            </div>
+        </mat-card>
+        <mat-card class="tarjeta">
+            <mat-card-title>Pilotos Relacionados</mat-card-title>
+            <div class="relatedContainer">
+                <div class="peli" *ngFor="let piloto of pilotList">
+                    <img mat-card-avatar [src]="getFotoPersonaje(piloto)" onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder-small.jpg'">
+                    <mat-card-content class = "titulo"> <a routerLink="/character-details/{{idPersonaje}}" routerLinkActive="active">{{piloto.name}}</a></mat-card-content>
+                </div>
+                <mat-card-content *ngIf="pilotList.length == 0">Esta nave no tiene personajes que la piloten</mat-card-content>
+            </div>
+        </mat-card>
+    </div>
+</div>

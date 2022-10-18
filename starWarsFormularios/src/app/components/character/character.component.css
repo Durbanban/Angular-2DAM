@@ -1,0 +1,59 @@
+.tarjeta {
+    max-width: 15%;
+    text-align: center;
+    
+}
+
+.mainContainer {
+    width: 80%;
+    margin: auto;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: space-around;
+}
+
+.navigate {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+@font-face {
+    font-family: 'Biko';
+    src: url(../../fonts/Biko_Regular.otf);
+}
+
+a {
+    text-decoration: none;
+    color: #81D4FA;
+    font-weight: 400;
+    font-family: 'Biko', sans-serif;
+                                                
+    letter-spacing: 0.4em;
+}
+
+span.personajes{
+    font-weight: 400;
+    font-size: 1.5em;
+    font-family: 'Biko', sans-serif;
+    letter-spacing: 0.4em;
+    color: white;
+}
+
+.pagination {
+    margin-bottom: 15px;
+}
+
+.info{
+    margin-bottom: 10px;
+}
+
+.crear {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

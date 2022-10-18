@@ -1,0 +1,23 @@
+<app-header></app-header>
+<div class="mainContainer">
+    <div class="navigate">
+        <div>
+        <a routerLink="/landing" routerLinkActive="active" class = "inicio"><span>Inicio</span></a><span class = "personajes"> / Personajes</span>
+        </div>
+        <button class="crear" mat-raised-button color="primary" routerLink="/new-character" routerLinkActive="active" >Crear Personaje</button>
+        <mat-button-toggle-group name="paginacionPersonajes" aria-label="Paginación de personajes" class="pagination">
+            <mat-button-toggle [disabled]="page == 1" (click)="getCharactersPage(page-1)">&#60;</mat-button-toggle>
+            <mat-button-toggle [checked]="page == i+1" *ngFor="let pagina of contadorPaginas(); let i = index" (click)="getCharactersPage(i+1)">{{i+1}}</mat-button-toggle>
+            <mat-button-toggle [disabled]="page == 9" (click)="getCharactersPage(page+1)">&#62;</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+    <div class = "container">
+        <mat-card class="tarjeta" *ngFor="let personaje of characterList">
+            <img mat-card-image [src]="getFotoPersonaje(personaje)" onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder.jpg'" alt={{personaje.name}}>
+            <mat-card-content>{{personaje.name}}</mat-card-content>
+            <mat-card-footer>
+                <button mat-raised-button color="warn" class="info" routerLink="/character-details/{{idPersonaje}}" routerLinkActive="active">+INFO</button></mat-card-footer>
+                <button mat-raised-button color= "primary" class="info" routerLink="/edit-character/{{idPersonaje}}" routerLinkActive="active">EDITAR</button>
+        </mat-card>
+    </div>
+</div>

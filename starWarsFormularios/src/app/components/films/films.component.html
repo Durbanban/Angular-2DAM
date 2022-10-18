@@ -1,0 +1,15 @@
+<app-header></app-header>
+<div class="mainContainer">
+    <div class="navigate">
+        <div>
+        <a routerLink="/landing" routerLinkActive="active" class = "inicio"><span>Inicio</span></a><span class = "personajes"> / Películas</span>
+        </div>
+    </div>
+    <div class = "container">
+        <mat-card class="tarjeta" *ngFor="let film of listadoFilms">
+            <img mat-card-image [src]="getPhotoURL(film)" onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder.jpg'" alt={{film.title}}>
+            <mat-card-content>{{film.title}}</mat-card-content>
+            <mat-card-footer><button mat-raised-button color="warn" class="info" routerLink="/film-details/{{idFilm}}" routerLinkActive="active">+INFO</button></mat-card-footer>
+        </mat-card>
+    </div>
+</div>

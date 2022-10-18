@@ -1,0 +1,45 @@
+<app-header></app-header>
+<div class = "mainContainer">
+    <div>
+        <a routerLink="/landing" routerLinkActive="active" class = "inicio"><span>Inicio</span></a><a routerLink="/planets" routerLinkActive="active"><span> / Planetas</span></a><span class="personaje"> / {{planet.name}}</span>
+    </div>
+    <div class="info">
+        <img class="fotoPersonaje" [src]="getFotoPlaneta()" onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder.jpg'" alt="{{planet.name}}">
+        <div>
+            <ul>
+                <h2>{{planet.name}}</h2>
+                <li>Población: {{planet.population}} habitantes</li>
+                <li>Período de rotación: {{planet.rotation_period}} dias</li>
+                <li>Período orbital: {{planet.orbital_period}} dias</li>
+                <li>Diámetro: {{planet.diameter}} km</li>
+                <li>Gravedad: {{planet.gravity}}</li>
+                <li>Biomas: {{planet.terrain}}</li>
+                <li>Superficie cubierta de agua: {{planet.surface_water}}</li>
+                <li>Clima: {{planet.climate}}</li>
+            </ul>
+        </div>
+    </div>
+    <div class = "related">
+        <mat-card class="tarjeta">
+            <mat-card-title>Películas relacionadas</mat-card-title>
+            <div class = "relatedContainer">
+                <div class="peli" *ngFor="let peli of planetFilmList">
+                    <img mat-card-avatar [src]="getFotoPelicula(peli)" onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder-small.jpg'">
+                    <mat-card-content class = "titulo"><a routerLink="/film-details/{{idFilm}}" routerLinkActive="active">{{peli.title}}</a></mat-card-content>
+                </div>
+                <mat-card-content *ngIf="planetFilmList.length == 0">Este planeta no tiene películas relacionadas</mat-card-content>
+            </div>
+        </mat-card>
+        <mat-card class="tarjeta">
+            <mat-card-title>Personajes relacionados</mat-card-title>
+            <div class="relatedContainer">
+                <div class="peli" *ngFor="let personaje of planetCharacterList">
+                    <img mat-card-avatar [src]="getFotoPersonaje(personaje)" onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder-small.jpg'">
+                    <mat-card-content class = "titulo"><a routerLink="/character-details/{{idPersonaje}}" routerLinkActive="active">{{personaje.name}}</a></mat-card-content>
+                </div>
+                <mat-card-content *ngIf="planetCharacterList.length == 0">Este planeta no tiene personajes relacionados</mat-card-content>
+            </div>
+        </mat-card>
+
+    </div>
+</div>

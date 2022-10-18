@@ -1,0 +1,73 @@
+span.personaje{
+    font-weight: 400;
+    font-size: 1.5em;
+    font-family: 'Biko', sans-serif;
+    letter-spacing: 0.4em;
+    color: white;
+}
+
+a {
+    text-decoration: none;
+    color: #81D4FA;
+    font-weight: 400;
+    font-family: 'Biko', sans-serif;
+                                                
+    letter-spacing: 0.4em;
+}
+
+.mainContainer {
+    width: 80%;
+    margin: auto;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.info > div {
+    background-color: white;
+    width: 100%;
+}
+
+.mainContainer :first-child {
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style: none;
+}
+
+.related {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 30px;
+}
+
+.related > div {
+    background-color: white;
+}
+
+
+.relatedContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+
+.titulo {
+    text-align: center;
+}
+
+.peli {
+    width: 30%;
+    text-align: center;
+}
+
+.tarjeta {
+    width: 30%;
+}

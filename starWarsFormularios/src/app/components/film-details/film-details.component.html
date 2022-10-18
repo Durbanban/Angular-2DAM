@@ -1,0 +1,86 @@
+<app-header></app-header>
+<div class="mainContainer">
+    <div>
+        <a routerLink="/landing" routerLinkActive="active" class="inicio"><span>Inicio</span></a><a routerLink="/films"
+            routerLinkActive="active"><span> / Peliculas</span></a><span class="personaje"> / {{ film.title }}</span>
+    </div>
+    <div class="info">
+        <img class="fotoPersonaje" [src]="getFotoPelicula()"
+            onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder.jpg'" alt="{{ film.title }}" />
+        <div>
+            <ul>
+                <h2>{{ film.title }}</h2>
+                <li>Año de estreno: {{ film.created }}</li>
+                <li>Director: {{ film.director }}</li>
+                <li>Productor(es): {{ film.producer }}</li>
+                <li>Resumen: {{ film.opening_crawl }}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="related">
+        <mat-card class="tarjeta">
+            <mat-card-title>Especies relacionadas</mat-card-title>
+            <div class="relatedContainer">
+                <div class="peli" *ngFor="let especie of specieFilmList">
+                    <img mat-card-avatar [src]="getFotoEspecie(especie)"
+                        onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder-small.jpg'" />
+                    <mat-card-content class="titulo"><a routerLink="/species-details/{{idSpecie}}" routerLinkActive="active">{{especie.name}}</a></mat-card-content>
+                </div>
+                <mat-card-content *ngIf="specieFilmList.length == 0">Este personaje no tiene especies relacionadas
+                </mat-card-content>
+            </div>
+        </mat-card>
+        <mat-card class="tarjeta">
+            <mat-card-title>Vehículos relacionados</mat-card-title>
+            <div class="relatedContainer">
+                <div class="peli" *ngFor="let vehiculo of vehicleFilmList">
+                    <img mat-card-avatar [src]="getFotoVehiculo(vehiculo)"
+                        onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder-small.jpg'" />
+                    <mat-card-content class="titulo"><a routerLink="/vehicle-details/{{idVehicle}}" routerLinkActive="active">{{vehiculo.name}}</a></mat-card-content>
+                </div>
+                <mat-card-content *ngIf="vehicleFilmList.length == 0">Este personaje no tiene vehículos relacionados
+                </mat-card-content>
+            </div>
+        </mat-card>
+        <mat-card class="tarjeta">
+            <mat-card-title>Naves relacionadas</mat-card-title>
+            <div class="relatedContainer">
+                <div class="peli" *ngFor="let nave of starshipFilmlist">
+                    <img mat-card-avatar [src]="getFotoNave(nave)"
+                        onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder-small.jpg'" />
+                    <mat-card-content class="titulo"><a routerLink="/starShip-details/{{ idStarship }}"
+                            routerLinkActive="active">{{ nave.name }}</a></mat-card-content>
+                </div>
+                <mat-card-content *ngIf="starshipFilmlist.length == 0">Este personaje no tiene naves relacionadas
+                </mat-card-content>
+            </div>
+        </mat-card>
+        <mat-card class="tarjeta">
+            <mat-card-title>Planetas relacionados</mat-card-title>
+            <div class="relatedContainer">
+                <div class="peli" *ngFor="let planeta of planetFilmList">
+                    <img mat-card-avatar [src]="getFotoPlaneta(planeta)"
+                        onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder-small.jpg'" />
+                    <mat-card-content class="titulo"><a routerLink="/planet-details/{{ idPlanet }}"
+                            routerLinkActive="active">{{ planeta.name }}</a></mat-card-content>
+                </div>
+                <mat-card-content *ngIf="starshipFilmlist.length == 0">Esta películar no tiene planetas relacionados
+                    relacionadas</mat-card-content>
+            </div>
+        </mat-card>
+        <mat-card class="tarjeta">
+            <mat-card-title>Protagonistas relacionados</mat-card-title>
+            <div class="relatedContainer">
+                <div class="peli" *ngFor="let prota of characterFilmlist">
+                    <img mat-card-avatar [src]="getFotoPersonaje(prota)"
+                        onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder-small.jpg'" />
+                    <mat-card-content class="titulo"><a routerLink="/character-details/{{ idPersonaje }}"
+                            routerLinkActive="active">{{ prota.name }}</a></mat-card-content>
+                </div>
+                <mat-card-content *ngIf="starshipFilmlist.length == 0">Este personaje no tiene Protagonistas
+                    relacionados
+                </mat-card-content>
+            </div>
+        </mat-card>
+    </div>
+</div>

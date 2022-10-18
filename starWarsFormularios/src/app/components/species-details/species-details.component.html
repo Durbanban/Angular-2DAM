@@ -1,0 +1,45 @@
+<app-header></app-header>
+<div class = "mainContainer">
+    <div>
+        <a routerLink="/landing" routerLinkActive="active" class = "inicio"><span>Inicio</span></a><a routerLink="/species" routerLinkActive="active"><span> / Especies</span></a><span class="personaje"> / {{species.name}}</span>
+    </div>
+    <div class="info">
+        <img class="fotoPersonaje" [src]="getFotoEspecie()" onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder.jpg'" alt="{{species.name}}">
+        <div>
+            <ul>
+                <h2>{{species.name}}</h2>
+                <li>Clasificación: {{species.classification}}</li>
+                <li>Designación: {{species.designation}}</li>
+                <li>Idioma: {{species.language}}</li>
+                <li>Esperanza de vida: {{species.average_lifespan}}</li>
+                <li>Altura media: {{species.average_height}}</li>
+                <li>Color de pelo: {{species.hair_colors}}</li>
+                <li>Color de piel: {{species.skin_colors}}</li>
+                <li>Color de ojos: {{species.eye_colors}}</li>
+            </ul>
+        </div>
+    </div>
+    <div class = "related">
+        <mat-card class="tarjeta">
+            <mat-card-title>Películas relacionadas</mat-card-title>
+            <div class = "relatedContainer">
+                <div class="peli" *ngFor="let peli of speciesFilmList">
+                    <img mat-card-avatar [src]="getFotoPelicula(peli)" onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder-small.jpg'">
+                    <mat-card-content class = "titulo"><a routerLink="/film-details/{{idFilm}}" routerLinkActive="active">{{peli.title}}</a></mat-card-content>
+                </div>
+                <mat-card-content *ngIf="speciesFilmList.length == 0">Esta especie no tiene películas relacionadas</mat-card-content>
+            </div>
+        </mat-card>
+        <mat-card class="tarjeta">
+            <mat-card-title>Personajes relacionados</mat-card-title>
+            <div class="relatedContainer">
+                <div class="peli" *ngFor="let personaje of speciesCharacterList">
+                    <img mat-card-avatar [src]="getFotoPersonaje(personaje)" onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder-small.jpg'">
+                    <mat-card-content class = "titulo"><a routerLink="/character-details/{{idPersonaje}}" routerLinkActive="active">{{personaje.name}}</a></mat-card-content>
+                </div>
+                <mat-card-content *ngIf="speciesCharacterList.length == 0">Esta especie no tiene personajes relacionados</mat-card-content>
+            </div>
+        </mat-card>
+
+    </div>
+</div>
