@@ -5,4 +5,16 @@
     margin: auto;
     margin-top: 15px;
     background-color: white;
+    padding: 25px;
+}
+
+.formulario > div {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 10px;
+}
+
+div > mat-form-field {
+    width: 50%;
 }

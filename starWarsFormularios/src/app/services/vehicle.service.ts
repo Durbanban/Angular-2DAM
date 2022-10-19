@@ -38,5 +38,20 @@ export class VehicleService {
     return filmList;
     
   }
+
+  public getAllVehicles(): Vehicle[] {
+    let vehicleList: Vehicle[] = [];
+    this.http.get<VehicleResponse>(`${environment.apiBaseUrl}vehicles`).subscribe(respuesta => {
+      for (let page = 1; page <= Math.ceil(respuesta.count/respuesta.results.length); page++) {
+        this.http.get<VehicleResponse>(`${environment.apiBaseUrl}vehicles?page=${page}`).subscribe(respuesta => {
+          respuesta.results.forEach(vehiculo => {
+            vehicleList.push(vehiculo);
+          })
+        })
+        
+      }
+    })
+    return vehicleList;
+  }
   
 }

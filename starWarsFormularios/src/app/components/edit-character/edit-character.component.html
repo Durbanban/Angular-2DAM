@@ -1,1 +1,84 @@
-<p>edit-character works!</p>
+
+<app-header></app-header>
+<form class = "formulario" action = "" [formGroup]="editCharacterForm">
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label for="name">Nombre</mat-label>
+            <input matInput type="text" formControlName="nameFormControl" [value]="editedCharacter.name">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Altura</mat-label>
+            <input matInput>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Peso</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Color de pelo</mat-label>
+            <input matInput>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Color de piel</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Color de ojos</mat-label>
+            <input matInput>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Año de nacimiento</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Género</mat-label>
+            <mat-select>
+                <mat-option value="Masculino">Masculino</mat-option>
+                <mat-option value="Femenino">Femenino</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Selecciona un planeta</mat-label>
+            <mat-select formControlName="planetFormControl">
+                <mat-option *ngFor="let planeta of planetList" [value]="editedCharacter.homeworld">{{planeta.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Selecciona las películas</mat-label>
+            <mat-select formControlName="filmFormControl" multiple>
+                
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Selecciona las especies</mat-label>
+            <mat-select formControlName="speciesFormControl" multiple>
+                
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Selecciona las naves</mat-label>
+            <mat-select formControlName="starshipFormControl" multiple>
+                
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <mat-form-field appearance="fill">
+        <mat-label>Seleciona los vehículos</mat-label>
+        <mat-select formControlName="vehicleFormControl" multiple>
+            
+        </mat-select>
+    </mat-form-field>
+    <button style="width: 25%; margin:auto; margin-bottom: 10px;" mat-raised-button color="primary" type="submit" [disabled]="!editCharacterForm.valid">Editar</button>
+</form>
+
+
