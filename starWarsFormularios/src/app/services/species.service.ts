@@ -39,4 +39,19 @@ export class SpeciesService {
     
   }
 
+  public getAllSpecies(): Species[] {
+    let speciesList: Species[] = [];
+    this.http.get<SpeciesResponse>(`${environment.apiBaseUrl}species`).subscribe(respuesta => {
+      for (let page = 1; page <= Math.ceil(respuesta.count / respuesta.results.length); page++) {
+        this.http.get<SpeciesResponse>(`${environment.apiBaseUrl}species?page=${page}`).subscribe(respuesta => {
+          respuesta.results.forEach(especie => {
+            speciesList.push(especie);
+          })
+        })
+        
+      }
+    })
+    return speciesList;
+  }
+
 }

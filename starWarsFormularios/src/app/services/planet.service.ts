@@ -34,21 +34,19 @@ export class PlanetService {
     
   }
 
-  public getAllPlanets(): Observable<PlanetResponse>[] {
-    let planetList: Observable<PlanetResponse>[] = [];
-    let flag = false;
-    let contador = 1;
-    while(flag) {
-      planetList.push(this.http.get<PlanetResponse>(`${environment.apiBaseUrl}planets?page=${contador}`));
-      if(this.http.get<PlanetResponse>(`${environment.apiBaseUrl}planets?page=${contador}`).subscribe(respuesta => {
-        respuesta.next != null
-      })) {
-        contador++;
-        planetList.push(this.http.get<PlanetResponse>(`${environment.apiBaseUrl}planets?page=${contador}`))
-      }else {
-        flag = true;
+  public getAllPlanets(): Planet[] {
+    let planetList: Planet[] = [];
+    this.http.get<PlanetResponse>(`${environment.apiBaseUrl}planets`).subscribe(respuesta => {
+      for (let page = 1; page <= Math.ceil(respuesta.count / respuesta.results.length); page++) {
+        this.http.get<PlanetResponse>(`${environment.apiBaseUrl}/planets?page=${page}`).subscribe(respuesta => {
+          respuesta.results.forEach(planet => {
+            planetList.push(planet);
+          })
+        })
+        
       }
-    }
+    })
     return planetList;
   }
+  
 }

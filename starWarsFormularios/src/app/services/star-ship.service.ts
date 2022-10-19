@@ -30,7 +30,22 @@ export class StarShipService {
 
   public getStarships(): Observable<StarShipResponse>{
     return this.http.get<StarShipResponse>(`${environment.apiBaseUrl}starships`)
-    }
+  }
+
+  public getAllStarships(): starShip[] {
+    let starshipList: starShip[] = [];
+    this.http.get<StarShipResponse>(`${environment.apiBaseUrl}starships`).subscribe(respuesta => {
+      for (let page = 1; page <= Math.ceil(respuesta.count/respuesta.results.length); page++) {
+        this.http.get<StarShipResponse>(`${environment.apiBaseUrl}starships?page=${page}`).subscribe(respuesta => {
+          respuesta.results.forEach(nave => {
+            starshipList.push(nave)
+          })
+        })
+        
+      }
+    })
+    return starshipList;
+  }
 
 
 
