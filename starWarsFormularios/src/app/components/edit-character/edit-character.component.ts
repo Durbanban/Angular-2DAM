@@ -23,7 +23,7 @@ import { CharacterComponent } from '../character/character.component';
 })
 export class EditCharacterComponent implements OnInit {
 
-  editedCharacter!: Character;
+  editedCharacter: Character = {} as Character;
   planetList: Planet[] = [];
   filmList: Film[] = [];
   speciesList: Species[] = [];
@@ -71,6 +71,14 @@ export class EditCharacterComponent implements OnInit {
     this.starshipList = this.starshipService.getAllStarships();
     this.vehicleList = this.vehicleService.getAllVehicles();
     
+  }
+
+  onSubmit() {
+    alert('Personaje creado');
+    console.log(this.editedCharacter.homeworld);
+    this.editedCharacter.films.forEach(peli => {
+      console.log(peli);
+    })
   }
 
 }

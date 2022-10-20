@@ -28,7 +28,7 @@ import { EditCharacterComponent } from './components/edit-character/edit-charact
     {path: 'planet-details/:id', component: PlanetDetailsComponent},
     {path: 'characters', component: CharacterComponent},
     {path: 'landing',component: LandingPageComponent},
-    {path: '',redirectTo:'/landing', pathMatch: 'full'},
+    {path: '', redirectTo:'/landing', pathMatch: 'full'},
     {path: 'planets', component: PlanetComponent},
     {path: 'species', component: SpeciesComponent},
     {path: 'starships', component: StarshipsComponent},

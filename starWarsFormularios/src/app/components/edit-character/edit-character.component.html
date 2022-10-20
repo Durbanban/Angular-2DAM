@@ -8,33 +8,33 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Altura</mat-label>
-            <input matInput>
+            <input matInput type="text" formControlName="heightFormControl" [value]="editedCharacter.height">
         </mat-form-field>
     </div>
     <div>
         <mat-form-field appearance="fill">
             <mat-label>Peso</mat-label>
-            <input matInput>
+            <input matInput type="text" formControlName="massFormControl" [value]="editedCharacter.mass">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Color de pelo</mat-label>
-            <input matInput>
+            <input matInput type="text" formControlName="hairColorFormControl" [value]="editedCharacter.hair_color">
         </mat-form-field>
     </div>
     <div>
         <mat-form-field appearance="fill">
             <mat-label>Color de piel</mat-label>
-            <input matInput>
+            <input matInput type="text" formControlName="skinColorFormControl" [value]="editedCharacter.skin_color">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Color de ojos</mat-label>
-            <input matInput>
+            <input matInput type="text" formControlName="eyeColorFormControl" [value]="editedCharacter.eye_color">
         </mat-form-field>
     </div>
     <div>
         <mat-form-field appearance="fill">
             <mat-label>Año de nacimiento</mat-label>
-            <input matInput>
+            <input matInput type="text" formControlName="birthdayFormControl" [value]="editedCharacter.birth_year">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Género</mat-label>
@@ -48,7 +48,7 @@
         <mat-form-field appearance="fill">
             <mat-label>Selecciona un planeta</mat-label>
             <mat-select formControlName="planetFormControl">
-                <mat-option *ngFor="let planeta of planetList" [value]="editedCharacter.homeworld">{{planeta.name}}</mat-option>
+                <mat-option *ngFor="let planeta of planetList" [value]="planeta.url">{{planeta.name}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="fill">
