@@ -24,6 +24,7 @@ import { CharacterComponent } from '../character/character.component';
 export class EditCharacterComponent implements OnInit {
 
   editedCharacter: Character = {} as Character;
+  editedCharacterPlanet: Planet = {} as Planet;
   planetList: Planet[] = [];
   filmList: Film[] = [];
   speciesList: Species[] = [];
@@ -66,6 +67,9 @@ export class EditCharacterComponent implements OnInit {
     this.planetList = this.planetService.getAllPlanets();
     this.filmService.getFilms().subscribe(respuesta => {
       this.filmList = respuesta.results;
+    })
+    this.planetService.getCharacterPlanet(this.editedCharacter.homeworld).subscribe(respuesta => {
+      this.editedCharacterPlanet = respuesta;
     })
     this.speciesList = this.speciesService.getAllSpecies();
     this.starshipList = this.starshipService.getAllStarships();

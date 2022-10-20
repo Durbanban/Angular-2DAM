@@ -48,13 +48,13 @@
         <mat-form-field appearance="fill">
             <mat-label>Selecciona un planeta</mat-label>
             <mat-select formControlName="planetFormControl">
-                <mat-option *ngFor="let planeta of planetList" [value]="planeta.url">{{planeta.name}}</mat-option>
+                <mat-option *ngFor="let planeta of planetList" [value]="editedCharacterPlanet">{{planeta.name}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Selecciona las películas</mat-label>
             <mat-select formControlName="filmFormControl" multiple>
-                
+                <mat-option *ngFor="let peli of filmList" [value]="peli.url">{{peli.title}}</mat-option>
             </mat-select>
         </mat-form-field>
     </div>
@@ -62,20 +62,20 @@
         <mat-form-field appearance="fill">
             <mat-label>Selecciona las especies</mat-label>
             <mat-select formControlName="speciesFormControl" multiple>
-                
+                <mat-option *ngFor="let especie of speciesList" [value]="especie.url">{{especie.name}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Selecciona las naves</mat-label>
             <mat-select formControlName="starshipFormControl" multiple>
-                
+                <mat-option *ngFor="let nave of starshipList" [value]="nave.url">{{nave.name}}</mat-option>
             </mat-select>
         </mat-form-field>
     </div>
     <mat-form-field appearance="fill">
         <mat-label>Seleciona los vehículos</mat-label>
         <mat-select formControlName="vehicleFormControl" multiple>
-            
+            <mat-option *ngFor="let vehiculo of vehicleList" [value]="vehiculo">{{vehiculo.name}}</mat-option>
         </mat-select>
     </mat-form-field>
     <button style="width: 25%; margin:auto; margin-bottom: 10px;" mat-raised-button color="primary" type="submit" [disabled]="!editCharacterForm.valid">Editar</button>
