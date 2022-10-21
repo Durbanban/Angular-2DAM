@@ -48,7 +48,7 @@
         <mat-form-field appearance="fill">
             <mat-label>Selecciona un planeta</mat-label>
             <mat-select formControlName="planetFormControl">
-                <mat-option *ngFor="let planeta of planetList" [value]="editedCharacterPlanet">{{planeta.name}}</mat-option>
+                <mat-option *ngFor="let planeta of planetList" [value]="planeta.url">{{planeta.name}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="fill">
@@ -75,7 +75,7 @@
     <mat-form-field appearance="fill">
         <mat-label>Seleciona los vehículos</mat-label>
         <mat-select formControlName="vehicleFormControl" multiple>
-            <mat-option *ngFor="let vehiculo of vehicleList" [value]="vehiculo">{{vehiculo.name}}</mat-option>
+            <mat-option *ngFor="let vehiculo of vehicleList" [value]="vehiculo.url">{{vehiculo.name}}</mat-option>
         </mat-select>
     </mat-form-field>
     <button style="width: 25%; margin:auto; margin-bottom: 10px;" mat-raised-button color="primary" type="submit" [disabled]="!editCharacterForm.valid">Editar</button>

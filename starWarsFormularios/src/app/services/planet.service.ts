@@ -45,7 +45,7 @@ export class PlanetService {
         })
         
       }
-    })
+    });
     return planetList;
   }
   

@@ -30,22 +30,7 @@ export class EditCharacterComponent implements OnInit {
   speciesList: Species[] = [];
   starshipList: starShip[] = [];
   vehicleList: Vehicle[] = [];
-
-
-  editCharacterForm = new FormGroup({
-    nameFormControl: new FormControl(this.editedCharacter.name),
-    heightFormControl: new FormControl(this.editedCharacter.height),
-    massFormControl: new FormControl(this.editedCharacter.mass),
-    hairColorFormControl: new FormControl(this.editedCharacter.hair_color),
-    skinColorFormControl: new FormControl(this.editedCharacter.skin_color),
-    eyeColorFormControl: new FormControl(this.editedCharacter.eye_color),
-    birthdayFormControl: new FormControl(this.editedCharacter.birth_year),
-    planetFormControl: new FormControl(this.editedCharacter.homeworld),
-    filmFormControl: new FormControl(this.editedCharacter.films),
-    speciesFormControl: new FormControl(this.editedCharacter.species),
-    starshipFormControl: new FormControl(this.editedCharacter.starships),
-    vehicleFormControl: new FormControl(this.editedCharacter.vehicles)
-  })
+  editCharacterForm: FormGroup = {} as FormGroup;
 
   constructor(private ruta: ActivatedRoute,
     private planetService: PlanetService,
@@ -63,14 +48,32 @@ export class EditCharacterComponent implements OnInit {
     const personajeId = Number(this.ruta.snapshot.paramMap.get('id'));
     this.characterService.getById(personajeId).subscribe(respuesta => {
       this.editedCharacter = respuesta;
-    })
+      this.planetService.getCharacterPlanet(this.editedCharacter.homeworld).subscribe(respuesta => {
+        this.editedCharacterPlanet = respuesta;
+
+        this.editCharacterForm = new FormGroup({
+          nameFormControl: new FormControl(this.editedCharacter.name),
+          heightFormControl: new FormControl(this.editedCharacter.height),
+          massFormControl: new FormControl(this.editedCharacter.mass),
+          hairColorFormControl: new FormControl(this.editedCharacter.hair_color),
+          skinColorFormControl: new FormControl(this.editedCharacter.skin_color),
+          eyeColorFormControl: new FormControl(this.editedCharacter.eye_color),
+          birthdayFormControl: new FormControl(this.editedCharacter.birth_year),
+          planetFormControl: new FormControl(this.editedCharacter.homeworld),
+          filmFormControl: new FormControl(this.editedCharacter.films),
+          speciesFormControl: new FormControl(this.editedCharacter.species),
+          starshipFormControl: new FormControl(this.editedCharacter.starships),
+          vehicleFormControl: new FormControl(this.editedCharacter.vehicles)
+        });
+      });
+    });
+    
     this.planetList = this.planetService.getAllPlanets();
+    console.log(this.planetList);
     this.filmService.getFilms().subscribe(respuesta => {
       this.filmList = respuesta.results;
-    })
-    this.planetService.getCharacterPlanet(this.editedCharacter.homeworld).subscribe(respuesta => {
-      this.editedCharacterPlanet = respuesta;
-    })
+    });
+
     this.speciesList = this.speciesService.getAllSpecies();
     this.starshipList = this.starshipService.getAllStarships();
     this.vehicleList = this.vehicleService.getAllVehicles();
