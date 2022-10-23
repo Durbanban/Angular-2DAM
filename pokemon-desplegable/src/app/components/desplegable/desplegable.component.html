@@ -3,7 +3,7 @@
     <mat-form-field appearance="fill">
         <mat-label>Selecciona un pokemon</mat-label>
         <mat-select [(ngModel)]="pokemonSelected">
-        <mat-option *ngFor="let pokemon of listaPokemon" [value]="pokemon">{{pokemon.name}}</mat-option>
+            <mat-option *ngFor="let pokemon of listaPokemon" [value]="pokemon">{{pokemon.name}}</mat-option>
         </mat-select>
     </mat-form-field>
     <div class = "seleccionado">
