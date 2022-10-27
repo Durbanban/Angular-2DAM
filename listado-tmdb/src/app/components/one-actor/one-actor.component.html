@@ -1,0 +1,9 @@
+<mat-card class="tarjeta">
+    <img mat-card-image [src]="getActorPhoto(actor.profile_path)" alt="Foto de {{actor.name}}">
+    <mat-card-content>
+    <mat-card-title>{{actor.name}}</mat-card-title>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary">INFO</button>
+    </mat-card-actions>
+  </mat-card>
