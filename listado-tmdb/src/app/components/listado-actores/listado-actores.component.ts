@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActorDetailsResponse } from 'src/app/interfaces/actor-details.interface';
 import { Actor } from 'src/app/interfaces/actor.interface';
+import { ActorDetailsService } from 'src/app/services/actor-details.service';
 import { ActorService } from 'src/app/services/actor.service';
+import { DialogDetalleActorComponent } from '../dialog-detalle-actor/dialog-detalle-actor.component';
 
 @Component({
   selector: 'app-listado-actores',
@@ -15,7 +19,7 @@ export class ListadoActoresComponent implements OnInit {
 
 
   
-  constructor(private actorService: ActorService) { }
+  constructor(private actorService: ActorService, private actorDetailsService: ActorDetailsService) { }
   
   ngOnInit(): void {
     this.getPopular(this.page);
@@ -29,6 +33,7 @@ export class ListadoActoresComponent implements OnInit {
     })
     this.page = page;
   }
+
 
   numPages() {
     return Array(this.totalPages);

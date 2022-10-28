@@ -1,0 +1,10 @@
+.dialogContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+
+.filmContainer {
+    display: flex;
+    gap: 30px;
+}

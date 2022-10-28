@@ -5,4 +5,16 @@
 
 .listado {
     display: flex;
+    flex-wrap: wrap;
+}
+
+.tarjeta {
+    width: 25%;
+}
+
+.pagination {
+    position: relative;
+    left: 70%;
+    margin-bottom: 30px;
+    margin-top: 30px;
 }

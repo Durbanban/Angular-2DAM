@@ -9,13 +9,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OneActorComponent } from './components/one-actor/one-actor.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { DialogDetalleActorComponent } from './components/dialog-detalle-actor/dialog-detalle-actor.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListadoActoresComponent,
     OneActorComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    DialogDetalleActorComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,39 @@
+<div class = "dialogContainer">
+    <img [src]="getActorPhoto(actor.profile_path)" alt="Foto de {{actor.name}}">
+    <div mat-dialog-content>
+        <h1 mat-dialog-title>{{actor.name}}</h1>
+        <h2>Biografía</h2>
+        <p>{{actor.biography}}</p>
+        <h2>Conocido/a por</h2>
+        <mat-tab-group mat-align-tabs="start">
+            <mat-tab label="{{info.known_for[0].title}}">
+                <div class="filmContainer">
+                    <img [src]="getFilmPhoto(info.known_for[0].poster_path)">
+                    <div>
+                        <p><strong>Título original:</strong> {{info.known_for[0].original_title}}</p>
+                        <p><strong>Sinopsis: </strong>{{info.known_for[0].overview}}</p>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="{{info.known_for[1].title}}">
+                <div class="filmContainer">
+                    <img [src]="getFilmPhoto(info.known_for[1].poster_path)">
+                    <div>
+                        <p><strong>Título original:</strong> {{info.known_for[1].original_title}}</p>
+                        <p><strong>Sinopsis: </strong>{{info.known_for[1].overview}}</p>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="{{info.known_for[2].title}}">
+                <div class="filmContainer">
+                    <img [src]="getFilmPhoto(info.known_for[2].poster_path)">
+                    <div>
+                        <p><strong>Título original:</strong> {{info.known_for[2].original_title}}</p>
+                        <p><strong>Sinopsis: </strong>{{info.known_for[2].overview}}</p>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+        
+    </div>
+</div>
