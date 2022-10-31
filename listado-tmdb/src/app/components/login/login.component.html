@@ -1,0 +1,17 @@
+<mat-toolbar color="warn">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>PelisPelis</span>
+    <span class="example-spacer"></span>
+    <button mat-raised-button routerLink="/login" routerLinkActive="active" *ngIf="sessionID == null; else elseBlock" (click)="requestToken()">Iniciar Sesión</button>
+    <ng-template #elseBlock>
+        <p></p>
+    </ng-template>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+</mat-toolbar>

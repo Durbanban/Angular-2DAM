@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActorDetailsResponse } from 'src/app/interfaces/actor-details.interface';
-import { Actor } from 'src/app/interfaces/actor.interface';
+import { ActorDetailsResponse } from 'src/app/models/interfaces/actor-details.interface';
+import { Actor } from 'src/app/models/interfaces/actor.interface';
 import { environment } from 'src/environments/environment.prod';
 
 @Component({
@@ -26,7 +26,7 @@ export class DialogDetalleActorComponent implements OnInit {
 
   getActorPhoto(profile: string | null) {
     if(profile != null) {
-      return `${environment.apiImgUrl}${profile}`
+      return `https://image.tmdb.org/t/p/w500${profile}`
     }else {
       return 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/vida-belen-esteban-internet-mas-buscada-1631542015.jpg?crop=1.00xw:0.667xh;0,0.0532xh&resize=640:*'
     }

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActorDetailsResponse } from 'src/app/interfaces/actor-details.interface';
-import { Actor } from 'src/app/interfaces/actor.interface';
+import { ActorDetailsResponse } from 'src/app/models/interfaces/actor-details.interface';
+import { Actor } from 'src/app/models/interfaces/actor.interface';
 import { ActorDetailsService } from 'src/app/services/actor-details.service';
 import { environment } from 'src/environments/environment.prod';
 import { DialogDetalleActorComponent } from '../dialog-detalle-actor/dialog-detalle-actor.component';

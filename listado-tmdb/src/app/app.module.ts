@@ -10,6 +10,8 @@ import { OneActorComponent } from './components/one-actor/one-actor.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { DialogDetalleActorComponent } from './components/dialog-detalle-actor/dialog-detalle-actor.component';
+import { LoginComponent } from './components/login/login.component';
+import { LandingComponent } from './components/landing/landing.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { DialogDetalleActorComponent } from './components/dialog-detalle-actor/d
     ListadoActoresComponent,
     OneActorComponent,
     NotFoundComponent,
-    DialogDetalleActorComponent
+    DialogDetalleActorComponent,
+    LoginComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,
