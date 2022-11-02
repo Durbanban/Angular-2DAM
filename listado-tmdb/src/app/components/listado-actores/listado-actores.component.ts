@@ -65,11 +65,14 @@ export class ListadoActoresComponent implements OnInit {
     });
   }
 
-  deleteSession() {
-    let sessionDelete = new DeleteSessionDto();
-    this.authService.deleteSession(sessionDelete);
-    localStorage.removeItem('session_id');
-    window.location.href="http://localhost:4200/actors"
+  deleteSession(sessionID: string | null) {
+    if(sessionID != null) {
+      let sessionDelete = new DeleteSessionDto();
+      sessionDelete.session_id = sessionID;
+      this.authService.deleteSession(sessionDelete);
+      localStorage.removeItem('session_id');
+      window.location.href="http://localhost:4200/actors"
+    }
   }
   
 

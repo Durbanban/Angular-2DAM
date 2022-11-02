@@ -18,20 +18,18 @@ export class LandingComponent implements OnInit {
   userName!: string;
   avatarPath!: string;
   authToken = '';
+  sessionActive = false;
 
   constructor(private router: Router,
     private ruta: ActivatedRoute,
     private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.sessionID = localStorage.getItem('session_id');
     this.createSession();
-    this.authService.getUserDetails(this.sessionID).subscribe(respuesta => {
-      this.userName = respuesta.username;
-      this.avatarPath = `https://www.themoviedb.org/t/p/w32_and_h32_face/${respuesta.avatar.tmdb.avatar_path}`
-    });
   }
-
-
+  
+  
   createSession() {
     this.ruta.queryParams.subscribe(params => {
       if(params['approved'] == 'true') {
@@ -39,6 +37,11 @@ export class LandingComponent implements OnInit {
         this.authService.createSession(this.session).subscribe(respuesta => {
           this.sessionID = respuesta.session_id;
           localStorage.setItem('session_id', this.sessionID);
+          this.authService.getUserDetails(this.sessionID).subscribe(respuesta => {
+            this.userName = respuesta.username;
+            this.avatarPath = `https://www.themoviedb.org/t/p/w32_and_h32_face/${respuesta.avatar.tmdb.avatar_path}`
+            this.sessionActive = true;
+          });
         });
       }
     });
@@ -59,6 +62,7 @@ export class LandingComponent implements OnInit {
     this.authService.deleteSession(sessionDelete);
     localStorage.removeItem('session_id');
     window.location.href="http://localhost:4200/landing"
+    this.sessionActive = false;
   }
 
 }

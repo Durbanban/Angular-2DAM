@@ -4,12 +4,16 @@
     </button>
     <span>PelisPelis</span>
     <span class="example-spacer"></span>
-    <button mat-raised-button routerLink="/login" routerLinkActive="active" *ngIf="sessionID == null; else elseBlock" (click)="requestToken()">Iniciar Sesión</button>
+    <button mat-raised-button routerLink="/login" routerLinkActive="active" *ngIf="!sessionActive; else elseBlock" (click)="requestToken()">Iniciar Sesión</button>
     <ng-template #elseBlock>
-        <div>
-            <p>{{userName}}</p>
-            <img [src]="avatarPath">
-            <button mat-raised-button (click)="deleteSession()">Log Out</button>
+        <div class="account">
+            <div class="avatar">
+                <p>Bienvenido: {{userName}}</p>
+                <img [src]="avatarPath">
+            </div>
+            <div>
+                <button mat-raised-button (click)="deleteSession()">Log Out</button>
+            </div>
         </div>
     </ng-template>
     <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
