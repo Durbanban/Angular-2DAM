@@ -6,33 +6,26 @@
         <p>{{actor.biography}}</p>
         <h2>Conocido/a por</h2>
         <mat-tab-group mat-align-tabs="start">
-            <mat-tab label="{{info.known_for[0].title}}">
-                <div class="filmContainer">
-                    <img [src]="getFilmPhoto(info.known_for[0].poster_path)">
-                    <div>
-                        <p><strong>Título original:</strong> {{info.known_for[0].original_title}}</p>
-                        <p><strong>Sinopsis: </strong>{{info.known_for[0].overview}}</p>
+            <ng-container *ngFor="let peli of info.known_for">
+                <mat-tab *ngIf="peli.media_type == 'movie'" label="{{peli.title}}">
+                    <div class="filmContainer">
+                        <img [src]="getFilmPhoto(peli.poster_path)">
+                        <div>
+                            <p><strong>Título original: </strong>{{peli.original_title}}</p>
+                            <p><strong>Sinopsis: </strong>{{peli.overview}}</p>
+                        </div>
                     </div>
-                </div>
-            </mat-tab>
-            <mat-tab label="{{info.known_for[1].title}}">
-                <div class="filmContainer">
-                    <img [src]="getFilmPhoto(info.known_for[1].poster_path)">
-                    <div>
-                        <p><strong>Título original:</strong> {{info.known_for[1].original_title}}</p>
-                        <p><strong>Sinopsis: </strong>{{info.known_for[1].overview}}</p>
+                </mat-tab>
+                <mat-tab *ngIf="peli.media_type == 'tv'" label="{{peli.name}}">
+                    <div class="filmContainer">
+                        <img [src]="getFilmPhoto(peli.poster_path)">
+                        <div>
+                            <p><strong>Título original: </strong>{{peli.original_name}}</p>
+                            <p><strong>Sinopsis: </strong>{{peli.overview}}</p>
+                        </div>
                     </div>
-                </div>
-            </mat-tab>
-            <mat-tab label="{{info.known_for[2].title}}">
-                <div class="filmContainer">
-                    <img [src]="getFilmPhoto(info.known_for[2].poster_path)">
-                    <div>
-                        <p><strong>Título original:</strong> {{info.known_for[2].original_title}}</p>
-                        <p><strong>Sinopsis: </strong>{{info.known_for[2].overview}}</p>
-                    </div>
-                </div>
-            </mat-tab>
+                </mat-tab>
+            </ng-container>
         </mat-tab-group>
         
     </div>

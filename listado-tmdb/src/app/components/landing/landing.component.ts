@@ -1,3 +1,4 @@
+import { isFakeMousedownFromScreenReader } from '@angular/cdk/a11y';
 import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -26,7 +27,15 @@ export class LandingComponent implements OnInit {
 
   ngOnInit(): void {
     this.sessionID = localStorage.getItem('session_id');
+    if(this.sessionID != null) {
+      this.sessionActive = true;
+      this.authService.getUserDetails(this.sessionID).subscribe(respuesta => {
+        this.userName = respuesta.username;
+        this.avatarPath = `https://www.themoviedb.org/t/p/w32_and_h32_face/${respuesta.avatar.tmdb.avatar_path}`
+      });
+    }
     this.createSession();
+
   }
   
   
@@ -40,9 +49,9 @@ export class LandingComponent implements OnInit {
           this.authService.getUserDetails(this.sessionID).subscribe(respuesta => {
             this.userName = respuesta.username;
             this.avatarPath = `https://www.themoviedb.org/t/p/w32_and_h32_face/${respuesta.avatar.tmdb.avatar_path}`
-            this.sessionActive = true;
           });
         });
+        this.sessionActive = true;
       }
     });
   }
@@ -59,6 +68,7 @@ export class LandingComponent implements OnInit {
 
   deleteSession() {
     let sessionDelete = new DeleteSessionDto();
+    sessionDelete.session_id = localStorage.getItem('session_id')!;
     this.authService.deleteSession(sessionDelete);
     localStorage.removeItem('session_id');
     window.location.href="http://localhost:4200/landing"
