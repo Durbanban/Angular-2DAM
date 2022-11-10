@@ -1,0 +1,12 @@
+<mat-slider
+  thumbLabel
+  [displayWith]="formatLabel"
+  tickInterval="1000"
+  step="1000"
+  min="0"
+  max="100000"
+  aria-label="units"></mat-slider>
+
+<div class="container">
+    <app-una-gasolinera *ngFor="let gas of gasList" [gasolinera]="gas"  ></app-una-gasolinera>
+</div>

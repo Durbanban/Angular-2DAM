@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PokemonDetailResponse } from 'src/app/interfaces/pokemon-details.interface';
 import { Pokemon } from 'src/app/interfaces/pokemon-response.interface';
@@ -12,7 +12,10 @@ import { PokemonInfoDialogComponent } from '../pokemon-info-dialog/pokemon-info-
 })
 export class TablaPokemonComponent implements OnInit {
   
-  listadoPokemon: Pokemon[] = [];
+  @Input() pokemon: Pokemon = {} as Pokemon;
+  @Output() pokemonSeleccionado = new EventEmitter<Pokemon>();
+
+
   listadoPokemonDetallado: PokemonDetailResponse[] = [];
   pokemonElegido: PokemonDetailResponse | undefined;
   tipos: string[] = []
@@ -20,9 +23,6 @@ export class TablaPokemonComponent implements OnInit {
   constructor(private pokeService: PokemonService, public dialog: MatDialog) { }
   
   ngOnInit(): void {
-    this.pokeService.pokemonList().subscribe(response => {
-      this.listadoPokemon = response.results;
-    });
   }
   
   getPokemonPhoto(pokemon: Pokemon) {
@@ -41,7 +41,12 @@ export class TablaPokemonComponent implements OnInit {
           pokemonInfo: this.pokemonElegido
         }
       });
-    })
+    });
+  }
+
+  selectPokemon(poke: Pokemon) {
+    this.pokemonSeleccionado.emit(poke);
+    console.log(poke.name);
   }
 
 

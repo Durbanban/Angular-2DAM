@@ -1,0 +1,9 @@
+<div class="maxCont">
+    <div class="container">
+        <app-tabla-pokemon *ngFor="let pokemon of listadoPokemon" (pokemonSeleccionado)="capturarPokemon($event)" [pokemon]="pokemon"></app-tabla-pokemon>
+    </div>
+    <div class="pokemonSelect">
+        <p>Pokemon seleccionado: </p>
+        <app-tabla-pokemon *ngIf="checkPokemon" [pokemon]="pokemonSelected"></app-tabla-pokemon>
+    </div>
+</div>

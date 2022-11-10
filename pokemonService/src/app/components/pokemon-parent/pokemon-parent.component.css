@@ -1,0 +1,15 @@
+app-tabla-pokemon {
+    width: 400px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.maxCont {
+    display: flex;
+    flex-direction: row;
+}
+
