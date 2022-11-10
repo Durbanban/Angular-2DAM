@@ -32,4 +32,15 @@ export class ListadoGasolinerasComponent implements OnInit {
     });
   }
 
-}
+  toNumber(cadena: string): number {
+    cadena.replace(',', '.');
+    return Number(cadena);
+  }
+  
+  sortPrices() {
+    let gasPrices = this.gasList.map(gasolinera => this.toNumber(gasolinera['Precio Gasolina 95 E5 Premium']));
+    gasPrices.sort((n1, n2) => n1 - n2);
+    return gasPrices[0];
+  }
+    
+  }
