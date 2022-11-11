@@ -8,6 +8,7 @@ import { ListadoGasolinerasComponent } from './components/listado-gasolineras/li
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialImportsModule } from './material-imports/material-imports.module';
 import { UnaGasolineraComponent } from './components/una-gasolinera/una-gasolinera.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { UnaGasolineraComponent } from './components/una-gasolinera/una-gasoline
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MaterialImportsModule
+    MaterialImportsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

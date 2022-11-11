@@ -11,5 +11,9 @@ app-una-gasolinera {
 .filtroPrecio {
     margin-top: 20px;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+}
+
+.tipoCombustible {
+    width: 20%;
 }

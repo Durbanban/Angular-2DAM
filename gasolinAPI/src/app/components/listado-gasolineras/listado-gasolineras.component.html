@@ -1,15 +1,38 @@
-<p>{{sortPrices()}}</p>
 <div class="filtroPrecio">
-  <mat-slider
-    thumbLabel
-    [displayWith]="formatLabel"
-    tickInterval="1000"
-    step="0.01"
-    min="0"
-    max="5"
-    aria-label="units"></mat-slider>
+  <div>
+    <p>Selecciona un precio máximo</p>
+    <mat-slider
+      [(ngModel)]="precio"
+      thumbLabel
+      [displayWith]="formatLabel"
+      tickInterval="1"
+      step="0.001"
+      [min]="0"
+      [max]="5"
+      aria-label="units"
+      (valueChange)="priceFilter()"
+    ></mat-slider>
+    <div>
+      <button *ngIf="precio != 0" mat-raised-button color="primary" (click)="sorting()">Ordenar por precio{{orden}}</button>
+    </div>
   </div>
+  <mat-select
+    class="tipoCombustible"
+    name="Selecciona el precio"
+    [(ngModel)]="fuelSelected"
+  >
+    <mat-option [value]="fuelSelected">Gasolina 95 E5</mat-option>
+    <mat-option [value]="fuelSelected">Gasolina 98 E5</mat-option>
+    <mat-option [value]="fuelSelected">Gasoleo A</mat-option>
+    <mat-option [value]="fuelSelected">Hidrogeno</mat-option>
+  </mat-select>
+  <p>{{ precio }}</p>
+</div>
 
 <div class="container">
-    <app-una-gasolinera *ngFor="let gas of gasList" [gasolinera]="gas" ></app-una-gasolinera>
+  <app-una-gasolinera
+    *ngFor="let gas of gasListFiltered"
+    [gasolinera]="gas"
+  ></app-una-gasolinera>
+  <h1 style="text-align: center;"*ngIf="gasListFiltered.length == 0" >No se encuentran gasolineras con los criterios de búsqueda</h1>
 </div>
