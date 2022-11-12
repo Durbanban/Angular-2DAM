@@ -1,6 +1,7 @@
 import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import { Gasolinera } from 'src/app/interfaces/Gasolinera.interface';
+import { Gasolinera } from 'src/app/interfaces/gasolinera.interface';
+
 import { GasolineraService } from 'src/app/services/gasolinera.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class ListadoGasolinerasComponent implements OnInit {
   constructor(private gasolineraService: GasolineraService) {}
 
   gasList: Gasolinera[] = [];
-  fuelSelected: number = 0;
+  fuelSelected = 'Precio Gasolina 95 E5';
   precio: number = 0;
   gasListFiltered: Gasolinera[] = [];
   fuelAttr: Gasolinera = {} as Gasolinera;
@@ -89,7 +90,7 @@ export class ListadoGasolinerasComponent implements OnInit {
   }
 
   selectFuel(fuelType: keyof typeof this.fuelAttr) {
-    
+    this.fuelSelected = fuelType;
   }
   
 }

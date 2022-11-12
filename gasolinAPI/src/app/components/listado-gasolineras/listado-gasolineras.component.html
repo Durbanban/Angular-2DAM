@@ -21,12 +21,11 @@
     name="Selecciona el precio"
     [(ngModel)]="fuelSelected"
   >
-    <mat-option [value]="fuelSelected">Gasolina 95 E5</mat-option>
-    <mat-option [value]="fuelSelected">Gasolina 98 E5</mat-option>
+    <mat-option *ngFor="let keyof fuelAttr of fuelAttr"></mat-option>
     <mat-option [value]="fuelSelected">Gasoleo A</mat-option>
+    <mat-option [value]="fuelSelected">Gasolina 95 E5</mat-option>
     <mat-option [value]="fuelSelected">Hidrogeno</mat-option>
   </mat-select>
-  <p>{{ precio }}</p>
 </div>
 
 <div class="container">
