@@ -2,7 +2,7 @@
 
 export interface Provincia {
     IDMunicipio: string;
-    IDProvincia: string;
+    IDPovincia: string;
     IDCCAA: string;
     Municipio: string;
     Provincia: string;

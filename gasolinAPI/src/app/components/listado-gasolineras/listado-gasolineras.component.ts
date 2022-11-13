@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { Gasolinera } from 'src/app/interfaces/gasolinera.interface';
+import { Municipio } from 'src/app/interfaces/municipio.interface';
 import { Provincia } from 'src/app/interfaces/provincia.interface';
 
 
@@ -24,11 +26,14 @@ export class ListadoGasolinerasComponent implements OnInit {
   precio: number = 5;
   gasListFiltered: Gasolinera[] = [];
   provinceList: Provincia[] = [];
+  municipioList: Municipio[] = [];
   provinceSelected = '';
   fuelAttr: Gasolinera = {} as Gasolinera;
   orden = '';
   checkOrder = false;
   myControl = new FormControl('');
+  options: Municipio[] = [];
+  filteredOptions: Observable<string> | undefined;
   
 
   ngOnInit(): void {
@@ -39,6 +44,7 @@ export class ListadoGasolinerasComponent implements OnInit {
       this.gasListFiltered = respuesta.ListaEESSPrecio;
       this.provinciaService.getProvincias().subscribe(respuesta => {
         this.provinceList = respuesta;
+
       })
     });
   }
@@ -121,6 +127,12 @@ export class ListadoGasolinerasComponent implements OnInit {
   provinceFilter() {
     this.filterBack();
     this.gasListFiltered = this.gasListFiltered.filter((gasolinera) => gasolinera.Provincia == this.provinceSelected && this.applyFilter(this.toNumber(gasolinera['Precio Gasolina 95 E5'])));
+  }
+
+  getMunicipios(id: string) {
+    this.municipioService.getMunicipiosByIdProvincia(id).subscribe(respuesta => {
+      this.municipioList = respuesta;
+    })
   }
 
 

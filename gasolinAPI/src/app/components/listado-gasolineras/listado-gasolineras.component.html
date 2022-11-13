@@ -30,9 +30,9 @@
     <mat-option value="''">Todas las provincias</mat-option>
     <mat-option *ngFor="let provincia of provinceList" [value]="provincia.Provincia">{{provincia.Provincia}}</mat-option>
   </mat-select>
-  <form class="example-form">
+  <form class="example-form" *ngIf="provinceSelected != ''">
     <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Number</mat-label>
+      <mat-label>Municipio</mat-label>
       <input type="text"
              placeholder="Pick one"
              aria-label="Number"
