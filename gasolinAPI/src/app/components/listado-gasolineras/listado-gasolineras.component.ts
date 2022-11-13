@@ -1,8 +1,13 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Gasolinera } from 'src/app/interfaces/gasolinera.interface';
+import { Provincia } from 'src/app/interfaces/provincia.interface';
+
+
 
 import { GasolineraService } from 'src/app/services/gasolinera.service';
+import { MunicipioService } from 'src/app/services/municipio.service';
+import { ProvinciaService } from 'src/app/services/provincia.service';
 
 @Component({
   selector: 'app-listado-gasolineras',
@@ -10,20 +15,31 @@ import { GasolineraService } from 'src/app/services/gasolinera.service';
   styleUrls: ['./listado-gasolineras.component.css'],
 })
 export class ListadoGasolinerasComponent implements OnInit {
-  constructor(private gasolineraService: GasolineraService) {}
+  constructor(private gasolineraService: GasolineraService,
+    private municipioService: MunicipioService,
+    private provinciaService: ProvinciaService) {}
 
   gasList: Gasolinera[] = [];
   fuelSelected = 'Precio Gasolina 95 E5';
-  precio: number = 0;
+  precio: number = 5;
   gasListFiltered: Gasolinera[] = [];
+  provinceList: Provincia[] = [];
+  provinceSelected = '';
   fuelAttr: Gasolinera = {} as Gasolinera;
   orden = '';
   checkOrder = false;
+  myControl = new FormControl('');
+  
 
   ngOnInit(): void {
+    
+    
     this.gasolineraService.getListadoGasolineras().subscribe((respuesta) => {
       this.gasList = respuesta.ListaEESSPrecio;
       this.gasListFiltered = respuesta.ListaEESSPrecio;
+      this.provinciaService.getProvincias().subscribe(respuesta => {
+        this.provinceList = respuesta;
+      })
     });
   }
   formatLabel(value: number) {
@@ -31,7 +47,8 @@ export class ListadoGasolinerasComponent implements OnInit {
   }
   
   priceFilter() {
-    this.gasListFiltered = this.gasList.filter((gasolinera) => this.applyFilter(this.toNumber(gasolinera['Precio Gasolina 95 E5'])));
+    this.filterBack();
+    this.gasListFiltered = this.gasListFiltered.filter((gasolinera) => this.applyFilter(this.toNumber(gasolinera['Precio Gasolina 95 E5'])) && gasolinera.Provincia == this.provinceSelected);
     
   }
 
@@ -47,7 +64,11 @@ export class ListadoGasolinerasComponent implements OnInit {
         return false;
       }
     }else {
-      return false;
+      if(this.provinceSelected != '') {
+        return true;
+      }else {
+        return false;
+      }
     }
   }
 
@@ -92,5 +113,17 @@ export class ListadoGasolinerasComponent implements OnInit {
   selectFuel(fuelType: keyof typeof this.fuelAttr) {
     this.fuelSelected = fuelType;
   }
+
+  filterBack() {
+    this.gasListFiltered = this.gasList;
+  }
+
+  provinceFilter() {
+    this.filterBack();
+    this.gasListFiltered = this.gasListFiltered.filter((gasolinera) => gasolinera.Provincia == this.provinceSelected && this.applyFilter(this.toNumber(gasolinera['Precio Gasolina 95 E5'])));
+  }
+
+
+
   
 }

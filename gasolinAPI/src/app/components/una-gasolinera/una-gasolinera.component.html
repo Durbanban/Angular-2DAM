@@ -1,6 +1,8 @@
 <mat-card>
     <mat-card-title>{{gasolinera['Rótulo']}}</mat-card-title>
     <mat-card-subtitle>Dirección: {{gasolinera['Dirección']}}</mat-card-subtitle>
+    <mat-card-subtitle>Provincia: {{gasolinera.Provincia}}</mat-card-subtitle>
+    <mat-card-subtitle>Municipio: {{gasolinera.Municipio}}</mat-card-subtitle>
     <mat-card-content *ngIf="gasolinera['Precio Gasoleo A']==''; else elseBlock1">Precio Gasoleo A: No disponible</mat-card-content>
     <mat-card-content *ngIf="gasolinera['Precio Gasolina 95 E5']==''; else elseBlock2">Precio Gasolina 95 E5: No disponible</mat-card-content>
     <mat-card-content *ngIf="gasolinera['Precio Hidrogeno']==''; else elseBlock3">Precio Hidrógeno: No disponible</mat-card-content>

@@ -19,15 +19,34 @@
   <mat-select
     class="tipoCombustible"
     name="Selecciona el precio"
-    [(ngModel)]="fuelSelected"
+    [(ngModel)]="fuelAttr"
   >
-    <mat-option *ngFor="let keyof fuelAttr of fuelAttr"></mat-option>
-    <mat-option [value]="fuelSelected">Gasoleo A</mat-option>
-    <mat-option [value]="fuelSelected">Gasolina 95 E5</mat-option>
-    <mat-option [value]="fuelSelected">Hidrogeno</mat-option>
+    <mat-option *ngFor="let atributo of fuelAttr | keyvalue" [value]="atributo.key">{{atributo.key}}</mat-option>
+    <!-- <mat-option [value]="fuelAttr['Precio Gasoleo A']">Gasoleo A</mat-option>
+    <mat-option [value]="fuelAttr['Precio Gasolina 95 E5']">Gasolina 95 E5</mat-option>
+    <mat-option [value]="fuelAttr['Precio Hidrogeno']">Hidrogeno</mat-option> -->
   </mat-select>
+  <mat-select class="provincia" [(ngModel)]="provinceSelected" (selectionChange)="provinceFilter()">
+    <mat-option value="''">Todas las provincias</mat-option>
+    <mat-option *ngFor="let provincia of provinceList" [value]="provincia.Provincia">{{provincia.Provincia}}</mat-option>
+  </mat-select>
+  <form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Number</mat-label>
+      <input type="text"
+             placeholder="Pick one"
+             aria-label="Number"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
 </div>
-
 <div class="container">
   <app-una-gasolinera
     *ngFor="let gas of gasListFiltered"

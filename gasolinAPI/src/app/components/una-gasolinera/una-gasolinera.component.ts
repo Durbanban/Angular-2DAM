@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { Gasolinera } from 'src/app/interfaces/gasolinera.interface';
 
 
 import { GasolineraService } from 'src/app/services/gasolinera.service';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { GasolineraResponse } from '../interfaces/Gasolinera.interface';
+import { GasolineraResponse } from '../interfaces/gasolinera.interface';
 import { Observable } from 'rxjs';
 
 @Injectable({
