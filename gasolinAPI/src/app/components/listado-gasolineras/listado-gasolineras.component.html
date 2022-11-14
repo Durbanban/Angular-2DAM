@@ -1,6 +1,6 @@
 <div class="filtroPrecio">
   <div>
-    <p>Selecciona un precio máximo</p>
+    <p>Selecciona {{fuel}} máximo</p>
     <mat-slider
       [(ngModel)]="precio"
       thumbLabel
@@ -13,44 +13,40 @@
       (valueChange)="priceFilter()"
     ></mat-slider>
     <div>
-      <button *ngIf="precio != 0" mat-raised-button color="primary" (click)="sorting()">Ordenar por precio{{orden}}</button>
+      <button *ngIf="precio != 0" mat-raised-button color="primary" (click)="sorting()">Ordenar por {{fuel}} {{orden}}</button>
     </div>
   </div>
   <mat-select
     class="tipoCombustible"
-    name="Selecciona el precio"
-    [(ngModel)]="fuelAttr"
+    placeholder="Selecciona el combustible"
+    [(ngModel)]="fuel"
+    (selectionChange)="priceFilter()"
   >
-    <mat-option *ngFor="let atributo of fuelAttr | keyvalue" [value]="atributo.key">{{atributo.key}}</mat-option>
-    <!-- <mat-option [value]="fuelAttr['Precio Gasoleo A']">Gasoleo A</mat-option>
-    <mat-option [value]="fuelAttr['Precio Gasolina 95 E5']">Gasolina 95 E5</mat-option>
-    <mat-option [value]="fuelAttr['Precio Hidrogeno']">Hidrogeno</mat-option> -->
+    <ng-container *ngFor="let atributo of fuelAttr | keyvalue">
+      <mat-option  *ngIf="atributo.key.includes('Precio')" [value]="atributo.key">{{atributo.key}}</mat-option>
+    </ng-container>
   </mat-select>
-  <mat-select class="provincia" [(ngModel)]="provinceSelected" (selectionChange)="provinceFilter()">
-    <mat-option value="''">Todas las provincias</mat-option>
-    <mat-option *ngFor="let provincia of provinceList" [value]="provincia.Provincia">{{provincia.Provincia}}</mat-option>
+  <mat-select class="provincia" [(ngModel)]="provinceSelected" placeholder="Selecciona una provincia" (selectionChange)="provinceFilter()">
+    <mat-option (onSelectionChange)="clearFilter()">Todas las provincias</mat-option>
+    <mat-option *ngFor="let provincia of provinceList" [value]="provincia.IDPovincia">{{provincia.Provincia}}</mat-option>
   </mat-select>
-  <form class="example-form" *ngIf="provinceSelected != ''">
-    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-form-field class="example-full-width" appearance="fill" *ngIf="this.provinceSelected != ''">
       <mat-label>Municipio</mat-label>
       <input type="text"
-             placeholder="Pick one"
+             placeholder="Selecciona un municipio"
              aria-label="Number"
              matInput
-             [formControl]="myControl"
+             [(ngModel)]="municipioSelected"
              [matAutocomplete]="auto">
-      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-          {{option}}
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="priceFilter()">
+        <mat-option (onSelectionChange)="clearFilterMunicipio()">Todos los municipios</mat-option>
+        <mat-option *ngFor="let municipio of municipioList" [value]="municipio.IDMunicipio">
+          {{municipio.Municipio}}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
-  </form>
 </div>
 <div class="container">
-  <app-una-gasolinera
-    *ngFor="let gas of gasListFiltered"
-    [gasolinera]="gas"
-  ></app-una-gasolinera>
+  <app-una-gasolinera *ngFor="let gas of gasListFiltered" [gasolinera]="gas"></app-una-gasolinera>
   <h1 style="text-align: center;"*ngIf="gasListFiltered.length == 0" >No se encuentran gasolineras con los criterios de búsqueda</h1>
 </div>
