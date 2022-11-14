@@ -8,12 +8,14 @@
       tickInterval="1"
       step="0.001"
       [min]="0"
-      [max]="5"
+      [max]="3"
       aria-label="units"
       (valueChange)="priceFilter()"
     ></mat-slider>
+    <p *ngIf="gasListFiltered.length > 0">{{gasListFiltered.length}} gasolineras encontradas</p>
     <div>
       <button *ngIf="precio != 0" mat-raised-button color="primary" (click)="sorting()">Ordenar por {{fuel}} {{orden}}</button>
+      <button mat-raised-button color="warn" (click)="sortingDistance()">Ordenar por distancia {{ordenDistance}}</button>
     </div>
   </div>
   <mat-select
@@ -27,7 +29,7 @@
     </ng-container>
   </mat-select>
   <mat-select class="provincia" [(ngModel)]="provinceSelected" placeholder="Selecciona una provincia" (selectionChange)="provinceFilter()">
-    <mat-option (onSelectionChange)="clearFilter()">Todas las provincias</mat-option>
+    <mat-option (click)="clearFilter()">Todas las provincias</mat-option>
     <mat-option *ngFor="let provincia of provinceList" [value]="provincia.IDPovincia">{{provincia.Provincia}}</mat-option>
   </mat-select>
     <mat-form-field class="example-full-width" appearance="fill" *ngIf="this.provinceSelected != ''">
@@ -39,7 +41,7 @@
              [(ngModel)]="municipioSelected"
              [matAutocomplete]="auto">
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="priceFilter()">
-        <mat-option (onSelectionChange)="clearFilterMunicipio()">Todos los municipios</mat-option>
+        <mat-option (click)="clearFilterMunicipio()">Todos los municipios</mat-option>
         <mat-option *ngFor="let municipio of municipioList" [value]="municipio.IDMunicipio">
           {{municipio.Municipio}}
         </mat-option>
@@ -47,6 +49,6 @@
     </mat-form-field>
 </div>
 <div class="container">
-  <app-una-gasolinera *ngFor="let gas of gasListFiltered" [gasolinera]="gas"></app-una-gasolinera>
+  <app-una-gasolinera *ngFor="let gas of gasListFiltered" [gasolinera]="gas" [distance]="calcDistance(gas)"></app-una-gasolinera>
   <h1 style="text-align: center;"*ngIf="gasListFiltered.length == 0" >No se encuentran gasolineras con los criterios de búsqueda</h1>
 </div>

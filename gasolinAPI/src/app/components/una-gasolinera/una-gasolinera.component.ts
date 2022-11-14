@@ -10,6 +10,7 @@ import { Gasolinera } from 'src/app/interfaces/gasolinera.interface';
 export class UnaGasolineraComponent implements OnInit {
 
   @Input() gasolinera: Gasolinera = {} as Gasolinera;
+  @Input() distance: number = 0;
 
   
 

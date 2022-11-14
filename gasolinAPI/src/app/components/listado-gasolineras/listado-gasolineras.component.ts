@@ -23,19 +23,20 @@ export class ListadoGasolinerasComponent implements OnInit {
     private provinciaService: ProvinciaService) {}
 
   gasList: Gasolinera[] = [];
-  fuelSelected = 'Precio Gasolina 95 E5';
-  precio: number = 5;
+  precio: number = 3;
   gasListFiltered: Gasolinera[] = [];
-  gasListFilteredByProvince: Gasolinera[] = []
-  gasListFilteredByProvinceAndMunicipio: Gasolinera[] = [];
   provinceList: Provincia[] = [];
   municipioList: Municipio[] = [];
   provinceSelected = '';
   fuelAttr: Gasolinera = {} as Gasolinera;
   orden = '';
+  ordenDistance= '';
   checkOrder = false;
+  checkOrderDistance = false;
   municipioSelected = '';
   fuel: keyof typeof this.fuelAttr = 'Precio Gasolina 95 E5';
+  userLong: number = 0;
+  userLat: number = 0;
   
 
   ngOnInit(): void {
@@ -79,6 +80,14 @@ export class ListadoGasolinerasComponent implements OnInit {
     }
   }
 
+  sortingDistance() {
+    if(this.checkOrderDistance) {
+      this.sortByMinDistance();
+    }else {
+      this.sortByMaxDistance();
+    }
+  }
+
   sortByMinPrice() {
     this.gasListFiltered = this.gasListFiltered.sort((gasStA, gasStB) => {
       if(this.toNumber(gasStA[this.fuel]) > this.toNumber(gasStB[this.fuel])) {
@@ -109,6 +118,36 @@ export class ListadoGasolinerasComponent implements OnInit {
     this.checkOrder = !this.checkOrder;
   }
 
+  sortByMaxDistance() {
+    this.gasListFiltered = this.gasListFiltered.sort((gasStA, gasStB) => {
+      if(this.calcDistance(gasStA) < this.calcDistance(gasStB)) {
+        return 1;
+      }else if (this.calcDistance(gasStA) > this.calcDistance(gasStB)) {
+        return -1;
+      }else {
+        return 0;
+      }
+      
+    });
+    this.ordenDistance = '(Desc.)'
+    this.checkOrderDistance = !this.checkOrderDistance;
+  }
+
+  sortByMinDistance() {
+    this.gasListFiltered = this.gasListFiltered.sort((gasStA, gasStB) => {
+      if(this.calcDistance(gasStA) > this.calcDistance(gasStB)) {
+        return 1;
+      }else if (this.calcDistance(gasStA) < this.calcDistance(gasStB)) {
+        return -1;
+      }else {
+        return 0;
+      }
+      
+    });
+    this.ordenDistance = '(Asc.)'
+    this.checkOrderDistance = !this.checkOrderDistance;
+  }
+
   
 
   provinceFilter() {
@@ -119,10 +158,6 @@ export class ListadoGasolinerasComponent implements OnInit {
    this.priceFilter();
   }
 
-  municipioFilter() {
-    this.gasListFilteredByProvinceAndMunicipio = this.gasListFilteredByProvince;
-    this.gasListFilteredByProvinceAndMunicipio = this.gasListFilteredByProvince.filter((gasolinera) => gasolinera.IDMunicipio == this.municipioSelected);
-  }
 
   clearFilter() {
     this.provinceSelected = '';
@@ -134,25 +169,41 @@ export class ListadoGasolinerasComponent implements OnInit {
     this.municipioSelected = '';
     this.priceFilter();
   }
-
+  
   getLocation(): void{
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position)=>{
-          const longitude = position.coords.longitude;
-          const latitude = position.coords.latitude;
-          this.callApi(longitude, latitude);
+          this.userLong = position.coords.longitude;
+          this.userLat = position.coords.latitude;
         });
     } else {
        console.log("No support for geolocation")
     }
   }
 
-  callApi(Longitude: number, Latitude: number){
-    const url = `https://api-adresse.data.gouv.fr/reverse/?lon=${Longitude}&lat=${Latitude}`
-    //Call API
+  
+  calcDistance(gas: Gasolinera) {
+    const gasLong = this.toNumber(gas['Longitud (WGS84)']);
+    const gasLat = this.toNumber(gas.Latitud);
+    let R = 6371; // km
+    let dLat = this.convertToRad(this.userLat-gasLat);
+    let dLon = this.convertToRad(this.userLong-gasLong);
+    let lat1 = this.convertToRad(gasLat);
+    let lat2 = this.convertToRad(this.userLat);
+
+    let a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    let d = R * c;
+    return d;
+
   }
 
+  convertToRad(value: number) {
+    return value * Math.PI / 180;
+  }
 
+  
 
   
 }
