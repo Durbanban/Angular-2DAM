@@ -66,11 +66,20 @@ export class ListadoGasolinerasComponent implements OnInit {
   
   priceFilter() {
     if(this.provinceSelected.length != 0 && this.municipioSelected != ''){
-      this.gasListFiltered = this.gasList.filter((gasolinera) => this.toNumber(gasolinera[this.fuel]) != 0 && this.toNumber(gasolinera[this.fuel]) <= this.precio && gasolinera.Municipio.toLowerCase().includes(this.municipioSelected.toLowerCase()) && this.provinceSelected.includes(gasolinera.IDProvincia));
+      this.gasListFiltered = this.gasList.filter((gasolinera) => 
+        this.toNumber(gasolinera[this.fuel]) != 0 
+        && this.toNumber(gasolinera[this.fuel]) <= this.precio 
+        && gasolinera.Municipio.toLowerCase().includes(this.municipioSelected.toLowerCase()) 
+        && this.provinceSelected.includes(gasolinera.IDProvincia));
     }else if(this.provinceSelected.length != 0 && this.municipioSelected == ''){
-      this.gasListFiltered = this.gasList.filter((gasolinera) => this.toNumber(gasolinera[this.fuel]) != 0 && this.toNumber(gasolinera[this.fuel]) <= this.precio && this.provinceSelected.includes(gasolinera.IDProvincia));
+      this.gasListFiltered = this.gasList.filter((gasolinera) => 
+        this.toNumber(gasolinera[this.fuel]) != 0 
+        && this.toNumber(gasolinera[this.fuel]) <= this.precio 
+        && this.provinceSelected.includes(gasolinera.IDProvincia));
     }else if(this.provinceSelected.length == 0 && this.municipioSelected == '') {
-      this.gasListFiltered = this.gasList.filter((gasolinera) => this.toNumber(gasolinera[this.fuel]) != 0 && this.toNumber(gasolinera[this.fuel]) <= this.precio);
+      this.gasListFiltered = this.gasList.filter((gasolinera) => 
+        this.toNumber(gasolinera[this.fuel]) != 0 
+        && this.toNumber(gasolinera[this.fuel]) <= this.precio);
     }    
   }
   
