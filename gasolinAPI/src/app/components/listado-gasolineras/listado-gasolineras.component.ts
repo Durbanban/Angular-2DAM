@@ -6,7 +6,7 @@ import { Gasolinera } from 'src/app/interfaces/gasolinera.interface';
 import { Municipio } from 'src/app/interfaces/municipio.interface';
 import { Provincia } from 'src/app/interfaces/provincia.interface';
 
-
+import {map, startWith} from 'rxjs/operators';
 
 import { GasolineraService } from 'src/app/services/gasolinera.service';
 import { MunicipioService } from 'src/app/services/municipio.service';
@@ -27,7 +27,7 @@ export class ListadoGasolinerasComponent implements OnInit {
   gasListFiltered: Gasolinera[] = [];
   provinceList: Provincia[] = [];
   municipioList: Municipio[] = [];
-  provinceSelected = '';
+  provinceSelected: string[] = [];
   fuelAttr: Gasolinera = {} as Gasolinera;
   orden = '';
   ordenDistance= '';
@@ -37,41 +37,49 @@ export class ListadoGasolinerasComponent implements OnInit {
   fuel: keyof typeof this.fuelAttr = 'Precio Gasolina 95 E5';
   userLong: number = 0;
   userLat: number = 0;
+  filteredOptions!: Observable<Municipio[]>;
+  myControl = new FormControl('');
   
 
   ngOnInit(): void {
-    
     this.getLocation();
     this.gasolineraService.getListadoGasolineras().subscribe((respuesta) => {
       this.gasList = respuesta.ListaEESSPrecio;
       this.gasListFiltered = respuesta.ListaEESSPrecio;
+      this.priceFilter();
       this.fuelAttr = this.gasList[0];
       this.provinciaService.getProvincias().subscribe(respuesta => {
         this.provinceList = respuesta;
       });
     });
   }
-
+  
   formatLabel(value: number) {
     return value;
   }
+
+  _filter(value: string): Municipio[] {
+    const filterValue = value.toLowerCase();
+    
+    return this.municipioList.filter(municipio => municipio.Municipio.toLowerCase().includes(filterValue));
+  }
   
   priceFilter() {
-    if(this.provinceSelected != '' && this.municipioSelected != ''){
-      this.gasListFiltered = this.gasList.filter((gasolinera) => this.toNumber(gasolinera[this.fuel]) != 0 && this.toNumber(gasolinera[this.fuel]) <= this.precio && gasolinera.IDMunicipio == this.municipioSelected && gasolinera.IDProvincia == this.provinceSelected);
-    }else if(this.provinceSelected != '' && this.municipioSelected == ''){
-      this.gasListFiltered = this.gasList.filter((gasolinera) => this.toNumber(gasolinera[this.fuel]) != 0 && this.toNumber(gasolinera[this.fuel]) <= this.precio && gasolinera.IDProvincia == this.provinceSelected);
-    }else if(this.provinceSelected == '' && this.municipioSelected == '') {
+    if(this.provinceSelected.length != 0 && this.municipioSelected != ''){
+      this.gasListFiltered = this.gasList.filter((gasolinera) => this.toNumber(gasolinera[this.fuel]) != 0 && this.toNumber(gasolinera[this.fuel]) <= this.precio && gasolinera.Municipio.toLowerCase().includes(this.municipioSelected.toLowerCase()) && this.provinceSelected.includes(gasolinera.IDProvincia));
+    }else if(this.provinceSelected.length != 0 && this.municipioSelected == ''){
+      this.gasListFiltered = this.gasList.filter((gasolinera) => this.toNumber(gasolinera[this.fuel]) != 0 && this.toNumber(gasolinera[this.fuel]) <= this.precio && this.provinceSelected.includes(gasolinera.IDProvincia));
+    }else if(this.provinceSelected.length == 0 && this.municipioSelected == '') {
       this.gasListFiltered = this.gasList.filter((gasolinera) => this.toNumber(gasolinera[this.fuel]) != 0 && this.toNumber(gasolinera[this.fuel]) <= this.precio);
     }    
   }
-
+  
   toNumber(cadena: string) {
     return Number(cadena.replace(',', '.'));
   }
-
   
-
+  
+  
   sorting() {
     if(this.checkOrder) {
       this.sortByMinPrice();
@@ -79,7 +87,7 @@ export class ListadoGasolinerasComponent implements OnInit {
       this.sortByMaxPrice();
     }
   }
-
+  
   sortingDistance() {
     if(this.checkOrderDistance) {
       this.sortByMinDistance();
@@ -87,7 +95,7 @@ export class ListadoGasolinerasComponent implements OnInit {
       this.sortByMaxDistance();
     }
   }
-
+  
   sortByMinPrice() {
     this.gasListFiltered = this.gasListFiltered.sort((gasStA, gasStB) => {
       if(this.toNumber(gasStA[this.fuel]) > this.toNumber(gasStB[this.fuel])) {
@@ -102,7 +110,7 @@ export class ListadoGasolinerasComponent implements OnInit {
     this.orden = '(Asc.)'
     this.checkOrder = !this.checkOrder;
   }
-
+  
   sortByMaxPrice() {
     this.gasListFiltered = this.gasListFiltered.sort((gasStA, gasStB) => {
       if(this.toNumber(gasStA[this.fuel]) < this.toNumber(gasStB[this.fuel])) {
@@ -117,7 +125,7 @@ export class ListadoGasolinerasComponent implements OnInit {
     this.orden = '(Desc.)';
     this.checkOrder = !this.checkOrder;
   }
-
+  
   sortByMaxDistance() {
     this.gasListFiltered = this.gasListFiltered.sort((gasStA, gasStB) => {
       if(this.calcDistance(gasStA) < this.calcDistance(gasStB)) {
@@ -132,7 +140,7 @@ export class ListadoGasolinerasComponent implements OnInit {
     this.ordenDistance = '(Desc.)'
     this.checkOrderDistance = !this.checkOrderDistance;
   }
-
+  
   sortByMinDistance() {
     this.gasListFiltered = this.gasListFiltered.sort((gasStA, gasStB) => {
       if(this.calcDistance(gasStA) > this.calcDistance(gasStB)) {
@@ -147,20 +155,27 @@ export class ListadoGasolinerasComponent implements OnInit {
     this.ordenDistance = '(Asc.)'
     this.checkOrderDistance = !this.checkOrderDistance;
   }
-
   
-
+  
+  
   provinceFilter() {
-   this.municipioSelected = '';
-   this.municipioService.getMunicipiosByIdProvincia(this.provinceSelected).subscribe(respuesta => {
-    this.municipioList = respuesta;
-   });
-   this.priceFilter();
-  }
+    this.municipioSelected = '';
+    this.municipioList = [];
+    this.provinceSelected.forEach(IDprovincia => {
+      this.municipioService.getMunicipiosByIdProvincia(IDprovincia).subscribe(respuesta => {
+      this.municipioList = this.municipioList.concat(respuesta);
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value || '')),
+      );
+    });
+  });
+  this.priceFilter();
+}
 
 
   clearFilter() {
-    this.provinceSelected = '';
+    this.provinceSelected = [];
     this.municipioSelected = '';
     this.priceFilter();
   }
@@ -171,13 +186,15 @@ export class ListadoGasolinerasComponent implements OnInit {
   }
   
   getLocation(): void{
-    if (navigator.geolocation) {
+    if(this.userLong == 0 && this.userLat == 0) {
+      if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position)=>{
           this.userLong = position.coords.longitude;
           this.userLat = position.coords.latitude;
         });
-    } else {
-       console.log("No support for geolocation")
+      }else {
+        console.log("No support for geolocation")
+      }
     }
   }
 
@@ -203,7 +220,17 @@ export class ListadoGasolinerasComponent implements OnInit {
     return value * Math.PI / 180;
   }
 
-  
-
-  
+  checkFuel() {
+    if(this.fuel == 'Precio Gasoleo A') {
+      return 1;
+    }else if (this.fuel == 'Precio Gasolina 95 E5') {
+      return 2;
+    }else if (this.fuel == 'Precio Hidrogeno') {
+      return 3;
+    }else if(this.fuel == 'Precio Biodiesel') {
+      return 4;
+    }else {
+      return 5;
+    }
+  }
 }

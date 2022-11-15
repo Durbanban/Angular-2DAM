@@ -8,18 +8,20 @@
     <mat-card-content *ngIf="gasolinera['Precio Gasolina 95 E5']==''; else elseBlock2">Precio Gasolina 95 E5: No disponible</mat-card-content>
     <mat-card-content *ngIf="gasolinera['Precio Hidrogeno']==''; else elseBlock3">Precio Hidrógeno: No disponible</mat-card-content>
     <mat-card-content *ngIf="gasolinera['Precio Biodiesel']==''; else elseBlock4">Precio Biodiesel: No disponible</mat-card-content>
-
+    
     <ng-template #elseBlock1>
-        <mat-card-content>Precio Gasoleo A: {{gasolinera['Precio Gasoleo A']}} €</mat-card-content>
+        <mat-card-content [ngClass]="{fuelSelected : fuelChecker == 1}">Precio Gasoleo A: {{gasolinera['Precio Gasoleo A']}} €</mat-card-content>
     </ng-template>
     <ng-template #elseBlock2>
-        <mat-card-content>Precio Gasolina 95 E5: {{gasolinera['Precio Gasolina 95 E5']}} €</mat-card-content>
+        <mat-card-content [ngClass]="{fuelSelected : fuelChecker == 2}">Precio Gasolina 95 E5: {{gasolinera['Precio Gasolina 95 E5']}} €</mat-card-content>
     </ng-template>
     <ng-template #elseBlock3>
-        <mat-card-content>Precio Hidrógeno: {{gasolinera['Precio Hidrogeno']}} €</mat-card-content>
+        <mat-card-content [ngClass]="{fuelSelected : fuelChecker == 3}">Precio Hidrógeno: {{gasolinera['Precio Hidrogeno']}} €</mat-card-content>
     </ng-template>
     <ng-template #elseBlock4>
-        <mat-card-content>Precio Biodiesel: {{gasolinera['Precio Biodiesel']}} €</mat-card-content>
+        <mat-card-content [ngClass]="{fuelSelected : fuelChecker == 4}">Precio Biodiesel: {{gasolinera['Precio Biodiesel']}} €</mat-card-content>
     </ng-template>
-    <mat-card-content></mat-card-content>
+
+    <mat-card-content *ngIf="fuelChecker == 5" class="fuelSelected">{{fuelType}}: {{gasolinera[fuelType]}} €</mat-card-content>
+
 </mat-card>
