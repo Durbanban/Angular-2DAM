@@ -17,6 +17,7 @@ export class GasolinerasMapComponent implements OnInit {
   @Input() userPos: google.maps.LatLngLiteral = {} as google.maps.LatLngLiteral;
   @Input() zoomInput: number = 0;
   @Input() gasolineras: Gasolinera[] = [];
+  gasStation: Gasolinera = {} as Gasolinera;
 
   
 
@@ -33,7 +34,9 @@ export class GasolinerasMapComponent implements OnInit {
     let pos: google.maps.LatLngLiteral = 
     {lat: Number(gasolinera.Latitud.replace(',', '.')), 
     lng: Number(gasolinera['Longitud (WGS84)'].replace(',', '.'))};
+    this.gasStation = gasolinera;
     return pos;
+    
   }
 
 }
