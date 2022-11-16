@@ -12,9 +12,9 @@
       aria-label="units"
       (valueChange)="priceFilter()"
     ></mat-slider>
-    <div>
-      <button *ngIf="precio != 0" mat-raised-button color="primary" (click)="sorting()">Ordenar por {{fuel}} {{orden}}</button>
-      <button mat-raised-button color="warn" (click)="sortingDistance()">Ordenar por distancia {{ordenDistance}}</button>
+    <div class="botones">
+      <button *ngIf="precio != 0" mat-raised-button color="primary" (click)="sorting()">{{fuel}} {{orden}}</button>
+      <button mat-raised-button color="warn" (click)="sortingDistance()">Distancia {{ordenDistance}}</button>
     </div>
   </div>
   <div class="desplegables">

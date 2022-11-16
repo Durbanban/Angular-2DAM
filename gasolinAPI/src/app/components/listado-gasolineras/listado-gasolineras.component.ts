@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Gasolinera } from 'src/app/interfaces/gasolinera.interface';
 
 import { Municipio } from 'src/app/interfaces/municipio.interface';
@@ -17,7 +17,7 @@ import { ProvinciaService } from 'src/app/services/provincia.service';
   templateUrl: './listado-gasolineras.component.html',
   styleUrls: ['./listado-gasolineras.component.css'],
 })
-export class ListadoGasolinerasComponent implements OnInit {
+export class ListadoGasolinerasComponent implements OnInit, OnDestroy {
   constructor(private gasolineraService: GasolineraService,
     private municipioService: MunicipioService,
     private provinciaService: ProvinciaService) {}
@@ -42,12 +42,13 @@ export class ListadoGasolinerasComponent implements OnInit {
   userPosition: google.maps.LatLngLiteral = {} as google.maps.LatLngLiteral;
   mapZoom = 4;
   gasPositions: google.maps.LatLngLiteral[] = [];
+  private subGas!: Subscription;
 
   
 
   ngOnInit(): void {
     this.getLocation();
-    this.gasolineraService.getListadoGasolineras().subscribe((respuesta) => {
+    this.subGas = this.gasolineraService.getListadoGasolineras().subscribe((respuesta) => {
       this.gasList = respuesta.ListaEESSPrecio;
       this.gasListFiltered = respuesta.ListaEESSPrecio;
       this.priceFilter();
@@ -56,6 +57,10 @@ export class ListadoGasolinerasComponent implements OnInit {
         this.provinceList = respuesta;
       });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subGas?.unsubscribe();
   }
   
   formatLabel(value: number) {
@@ -75,11 +80,6 @@ export class ListadoGasolinerasComponent implements OnInit {
         && this.toNumber(gasolinera[this.fuel]) <= this.precio 
         && gasolinera.Municipio.toLowerCase().includes(this.municipioSelected.toLowerCase()) 
         && this.provinceSelected.includes(gasolinera.IDProvincia));
-      this.gasPositions = [];
-      this.gasListFiltered.forEach(gas => {
-        let gasPos: google.maps.LatLngLiteral = {lat: this.toNumber(gas.Latitud), lng: this.toNumber(gas['Longitud (WGS84)'])};
-        this.gasPositions.push(gasPos);
-      });
       this.mapZoom = 11;
       this.userPosition = {lat: this.toNumber(this.gasListFiltered[0].Latitud), lng: this.toNumber(this.gasListFiltered[0]['Longitud (WGS84)'])}
     }else if(this.provinceSelected.length != 0 && this.municipioSelected == ''){
@@ -87,22 +87,12 @@ export class ListadoGasolinerasComponent implements OnInit {
         this.toNumber(gasolinera[this.fuel]) != 0 
         && this.toNumber(gasolinera[this.fuel]) <= this.precio 
         && this.provinceSelected.includes(gasolinera.IDProvincia));
-      this.gasPositions = [];
-      this.gasListFiltered.forEach(gas => {
-        let gasPos: google.maps.LatLngLiteral = {lat: this.toNumber(gas.Latitud), lng: this.toNumber(gas['Longitud (WGS84)'])};
-        this.gasPositions.push(gasPos);
-      });
       this.mapZoom= 8;
       this.userPosition = {lat: this.toNumber(this.gasListFiltered[0].Latitud), lng: this.toNumber(this.gasListFiltered[0]['Longitud (WGS84)'])}
     }else if(this.provinceSelected.length == 0 && this.municipioSelected == '') {
       this.gasListFiltered = this.gasList.filter((gasolinera) => 
         this.toNumber(gasolinera[this.fuel]) != 0 
-        && this.toNumber(gasolinera[this.fuel]) <= this.precio);
-      this.gasPositions = [];      
-      this.gasListFiltered.forEach(gas => {
-        let gasPos: google.maps.LatLngLiteral = {lat: this.toNumber(gas.Latitud), lng: this.toNumber(gas['Longitud (WGS84)'])};
-        this.gasPositions.push(gasPos);
-      });
+        && this.toNumber(gasolinera[this.fuel]) <= this.precio);  
       this.mapZoom = 5;
     }    
   }

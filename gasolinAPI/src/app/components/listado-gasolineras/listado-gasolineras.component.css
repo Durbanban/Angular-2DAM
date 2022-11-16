@@ -30,3 +30,14 @@ app-una-gasolinera {
     margin: auto;
     gap: 50px;
 }
+
+.botones {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.botones button {
+    width: 60%;
+    overflow: auto;
+}

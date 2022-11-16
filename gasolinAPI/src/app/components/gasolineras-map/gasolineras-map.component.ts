@@ -29,4 +29,11 @@ export class GasolinerasMapComponent implements OnInit {
     this.infoWindow.open(marcador);
   }
 
+  getGasPosition(gasolinera: Gasolinera): google.maps.LatLngLiteral {
+    let pos: google.maps.LatLngLiteral = 
+    {lat: Number(gasolinera.Latitud.replace(',', '.')), 
+    lng: Number(gasolinera['Longitud (WGS84)'].replace(',', '.'))};
+    return pos;
+  }
+
 }
