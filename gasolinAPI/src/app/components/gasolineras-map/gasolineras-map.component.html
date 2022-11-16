@@ -1,0 +1,8 @@
+<div>
+    <google-map [center]="userPos" [zoom]="zoomInput">
+        <map-marker #marker="mapMarker" *ngFor="let marcador of marcadores" [position]="marcador" (mapClick)="openInfoWindow(marker)"></map-marker>
+   
+        <map-info-window>ARBI QUE SON NIÑOS</map-info-window>
+
+    </google-map>
+</div>

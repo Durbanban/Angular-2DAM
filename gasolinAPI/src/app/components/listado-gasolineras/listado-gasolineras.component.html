@@ -12,45 +12,50 @@
       aria-label="units"
       (valueChange)="priceFilter()"
     ></mat-slider>
-    <p *ngIf="gasListFiltered.length > 0">{{gasListFiltered.length}} gasolineras encontradas</p>
     <div>
       <button *ngIf="precio != 0" mat-raised-button color="primary" (click)="sorting()">Ordenar por {{fuel}} {{orden}}</button>
       <button mat-raised-button color="warn" (click)="sortingDistance()">Ordenar por distancia {{ordenDistance}}</button>
     </div>
   </div>
-  <mat-select
-    class="tipoCombustible"
-    placeholder="Selecciona el combustible"
-    [(ngModel)]="fuel"
-    (selectionChange)="priceFilter()"
-  >
-    <ng-container *ngFor="let atributo of fuelAttr | keyvalue">
-      <mat-option  *ngIf="atributo.key.includes('Precio')" [value]="atributo.key">{{atributo.key}}</mat-option>
-    </ng-container>
-  </mat-select>
-  <mat-select class="provincia" [(ngModel)]="provinceSelected" placeholder="Selecciona una provincia" (selectionChange)="provinceFilter()" multiple>
-    <mat-option [disabled]="provinceSelected.length == 0" (click)="clearFilter()">Todas las provincias</mat-option>
-    <mat-option *ngFor="let provincia of provinceList" [value]="provincia.IDPovincia">{{provincia.Provincia}}</mat-option>
-  </mat-select>
-    <mat-form-field class="example-full-width" appearance="fill" *ngIf="this.provinceSelected.length != 0">
-      <mat-label>Municipio</mat-label>
-      <input type="text"
-             placeholder="Ej: Sevilla"
-             aria-label="Number"
-             matInput
-             [(ngModel)]="municipioSelected"
-             [formControl]="myControl"
-             [matAutocomplete]="auto"
-             (input)="priceFilter()">
-      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="priceFilter()">
-        <mat-option (click)="clearFilterMunicipio()">Todos los municipios</mat-option>
-        <mat-option *ngFor="let municipio of filteredOptions | async" [value]="municipio.Municipio">
-          {{municipio.Municipio}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
+  <div class="desplegables">
+    <mat-select
+      class="tipoCombustible"
+      placeholder="Selecciona el combustible"
+      [(ngModel)]="fuel"
+      (selectionChange)="priceFilter()"
+    >
+      <ng-container *ngFor="let atributo of fuelAttr | keyvalue">
+        <mat-option  *ngIf="atributo.key.includes('Precio')" [value]="atributo.key">{{atributo.key}}</mat-option>
+      </ng-container>
+    </mat-select>
+    <mat-select class="provincia" [(ngModel)]="provinceSelected" placeholder="Selecciona una provincia" (selectionChange)="provinceFilter()" multiple>
+      <mat-option [disabled]="provinceSelected.length == 0" (click)="clearFilter()">Todas las provincias</mat-option>
+      <mat-option *ngFor="let provincia of provinceList" [value]="provincia.IDPovincia">{{provincia.Provincia}}</mat-option>
+    </mat-select>
+      <mat-form-field class="example-full-width" appearance="fill" *ngIf="this.provinceSelected.length != 0">
+        <mat-label>Municipio</mat-label>
+        <input type="text"
+              placeholder="Ej: Sevilla"
+              aria-label="Number"
+              matInput
+              [(ngModel)]="municipioSelected"
+              [formControl]="myControl"
+              [matAutocomplete]="auto"
+              (input)="priceFilter()">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="priceFilter()">
+          <mat-option (click)="clearFilterMunicipio()">Todos los municipios</mat-option>
+          <mat-option *ngFor="let municipio of filteredOptions | async" [value]="municipio.Municipio">
+            {{municipio.Municipio}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
 </div>
+<h1 *ngIf="gasListFiltered.length > 0">{{gasListFiltered.length}} gasolineras encontradas</h1>
 <div class="container">
-  <app-una-gasolinera *ngFor="let gas of gasListFiltered" [gasolinera]="gas" [distance]="calcDistance(gas)" [fuelChecker]="checkFuel()" [fuelType]="fuel"></app-una-gasolinera>
-  <h1 style="text-align: center;"*ngIf="gasListFiltered.length == 0" >No se encuentran gasolineras con los criterios de búsqueda</h1>
+  <app-gasolineras-map [userPos]="userPosition" [zoomInput]="mapZoom" [marcadores]="gasPositions" [gasolineras]="gasListFiltered"></app-gasolineras-map>
+  <div class="container">
+    <app-una-gasolinera *ngFor="let gas of gasListFiltered" [gasolinera]="gas" [distance]="calcDistance(gas)" [fuelChecker]="checkFuel()" [fuelType]="fuel"></app-una-gasolinera>
+    <h1 style="text-align: center;"*ngIf="gasListFiltered.length == 0" >No se encuentran gasolineras con los criterios de búsqueda</h1>
+  </div>
 </div>

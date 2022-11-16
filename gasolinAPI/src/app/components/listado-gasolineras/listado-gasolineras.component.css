@@ -2,18 +2,31 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    width: 80%;
+    border: blue 2px solid;
+    margin: auto;
+    text-align: center;
+    justify-content: center;
+    gap: 15px;
 }
 
 app-una-gasolinera {
-    width: 25%;
+    width: 20%;
+    border: red 1px solid;
 }
 
 .filtroPrecio {
     margin-top: 20px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    margin-left: 100px;
 }
 
-.tipoCombustible {
-    width: 20%;
+
+
+.desplegables {
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    gap: 50px;
 }
