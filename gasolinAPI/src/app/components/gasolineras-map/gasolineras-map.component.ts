@@ -18,6 +18,7 @@ export class GasolinerasMapComponent implements OnInit {
   @Input() zoomInput: number = 0;
   @Input() gasolineras: Gasolinera[] = [];
   gasStation: Gasolinera = {} as Gasolinera;
+  pos: google.maps.LatLngLiteral= {} as google.maps.LatLngLiteral;
 
   
 
@@ -26,17 +27,11 @@ export class GasolinerasMapComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openInfoWindow(marcador: MapMarker) {
-    this.infoWindow.open(marcador);
-  }
-
-  getGasPosition(gasolinera: Gasolinera): google.maps.LatLngLiteral {
-    let pos: google.maps.LatLngLiteral = 
-    {lat: Number(gasolinera.Latitud.replace(',', '.')), 
-    lng: Number(gasolinera['Longitud (WGS84)'].replace(',', '.'))};
+  openInfoWindow(marcador:MapMarker, gasolinera: Gasolinera) {
     this.gasStation = gasolinera;
-    return pos;
     
+    this.infoWindow.open(marcador);
+
   }
 
 }

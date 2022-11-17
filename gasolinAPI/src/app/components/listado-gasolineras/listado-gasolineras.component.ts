@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
-import { Gasolinera } from 'src/app/interfaces/gasolinera.interface';
+
 
 import { Municipio } from 'src/app/interfaces/municipio.interface';
 import { Provincia } from 'src/app/interfaces/provincia.interface';
@@ -11,13 +11,15 @@ import {map, startWith} from 'rxjs/operators';
 import { GasolineraService } from 'src/app/services/gasolinera.service';
 import { MunicipioService } from 'src/app/services/municipio.service';
 import { ProvinciaService } from 'src/app/services/provincia.service';
+import { Gasolinera } from 'src/app/interfaces/gasolinera.interface';
+import { MapMarkerClusterer } from '@angular/google-maps';
 
 @Component({
   selector: 'app-listado-gasolineras',
   templateUrl: './listado-gasolineras.component.html',
   styleUrls: ['./listado-gasolineras.component.css'],
 })
-export class ListadoGasolinerasComponent implements OnInit, OnDestroy {
+export class ListadoGasolinerasComponent implements OnInit {
   constructor(private gasolineraService: GasolineraService,
     private municipioService: MunicipioService,
     private provinciaService: ProvinciaService) {}
@@ -42,25 +44,25 @@ export class ListadoGasolinerasComponent implements OnInit, OnDestroy {
   userPosition: google.maps.LatLngLiteral = {} as google.maps.LatLngLiteral;
   mapZoom = 4;
   gasPositions: google.maps.LatLngLiteral[] = [];
-  private subGas!: Subscription;
+  cluster: MapMarkerClusterer = {} as MapMarkerClusterer;
 
   
 
   ngOnInit(): void {
     this.getLocation();
-    this.subGas = this.gasolineraService.getListadoGasolineras().subscribe((respuesta) => {
+    this.gasolineraService.getListadoGasolineras().subscribe((respuesta) => {
+      debugger;
       this.gasList = respuesta.ListaEESSPrecio;
-      this.gasListFiltered = respuesta.ListaEESSPrecio;
-      this.priceFilter();
+      this.gasList.forEach(gas => {
+        gas.Position = {lat: Number(gas.Latitud.replace(',', '.')), lng: Number(gas['Longitud (WGS84)'].replace(',', '.'))};
+      });
+      this.gasListFiltered = this.gasList;
       this.fuelAttr = this.gasList[0];
       this.provinciaService.getProvincias().subscribe(respuesta => {
         this.provinceList = respuesta;
       });
     });
-  }
-
-  ngOnDestroy(): void {
-    this.subGas?.unsubscribe();
+    this.priceFilter();
   }
   
   formatLabel(value: number) {
@@ -76,23 +78,23 @@ export class ListadoGasolinerasComponent implements OnInit, OnDestroy {
   priceFilter() {
     if(this.provinceSelected.length != 0 && this.municipioSelected != ''){
       this.gasListFiltered = this.gasList.filter((gasolinera) => 
-        this.toNumber(gasolinera[this.fuel]) != 0 
-        && this.toNumber(gasolinera[this.fuel]) <= this.precio 
+        this.toNumber(gasolinera[this.fuel] as string) != 0 
+        && this.toNumber(gasolinera[this.fuel] as string) <= this.precio 
         && gasolinera.Municipio.toLowerCase().includes(this.municipioSelected.toLowerCase()) 
         && this.provinceSelected.includes(gasolinera.IDProvincia));
       this.mapZoom = 11;
       this.userPosition = {lat: this.toNumber(this.gasListFiltered[0].Latitud), lng: this.toNumber(this.gasListFiltered[0]['Longitud (WGS84)'])}
     }else if(this.provinceSelected.length != 0 && this.municipioSelected == ''){
       this.gasListFiltered = this.gasList.filter((gasolinera) => 
-        this.toNumber(gasolinera[this.fuel]) != 0 
-        && this.toNumber(gasolinera[this.fuel]) <= this.precio 
+        this.toNumber(gasolinera[this.fuel] as string) != 0 
+        && this.toNumber(gasolinera[this.fuel] as string) <= this.precio 
         && this.provinceSelected.includes(gasolinera.IDProvincia));
       this.mapZoom= 8;
       this.userPosition = {lat: this.toNumber(this.gasListFiltered[0].Latitud), lng: this.toNumber(this.gasListFiltered[0]['Longitud (WGS84)'])}
     }else if(this.provinceSelected.length == 0 && this.municipioSelected == '') {
       this.gasListFiltered = this.gasList.filter((gasolinera) => 
-        this.toNumber(gasolinera[this.fuel]) != 0 
-        && this.toNumber(gasolinera[this.fuel]) <= this.precio);  
+        this.toNumber(gasolinera[this.fuel] as string) != 0 
+        && this.toNumber(gasolinera[this.fuel] as string) <= this.precio);  
       this.mapZoom = 5;
     }    
   }
@@ -100,8 +102,6 @@ export class ListadoGasolinerasComponent implements OnInit, OnDestroy {
   toNumber(cadena: string) {
     return Number(cadena.replace(',', '.'));
   }
-  
-  
   
   sorting() {
     if(this.checkOrder) {
@@ -121,9 +121,9 @@ export class ListadoGasolinerasComponent implements OnInit, OnDestroy {
   
   sortByMinPrice() {
     this.gasListFiltered = this.gasListFiltered.sort((gasStA, gasStB) => {
-      if(this.toNumber(gasStA[this.fuel]) > this.toNumber(gasStB[this.fuel])) {
+      if(this.toNumber(gasStA[this.fuel] as string) > this.toNumber(gasStB[this.fuel] as string)) {
         return 1;
-      }else if (this.toNumber(gasStA[this.fuel]) < this.toNumber(gasStB[this.fuel])) {
+      }else if (this.toNumber(gasStA[this.fuel] as string) < this.toNumber(gasStB[this.fuel] as string)) {
         return -1;
       }else {
         return 0;
@@ -136,9 +136,9 @@ export class ListadoGasolinerasComponent implements OnInit, OnDestroy {
   
   sortByMaxPrice() {
     this.gasListFiltered = this.gasListFiltered.sort((gasStA, gasStB) => {
-      if(this.toNumber(gasStA[this.fuel]) < this.toNumber(gasStB[this.fuel])) {
+      if(this.toNumber(gasStA[this.fuel] as string) < this.toNumber(gasStB[this.fuel] as string)) {
         return 1;
-      }else if (this.toNumber(gasStA[this.fuel]) > this.toNumber(gasStB[this.fuel])) {
+      }else if (this.toNumber(gasStA[this.fuel] as string) > this.toNumber(gasStB[this.fuel] as string)) {
         return -1;
       }else {
         return 0;
@@ -179,23 +179,20 @@ export class ListadoGasolinerasComponent implements OnInit, OnDestroy {
     this.checkOrderDistance = !this.checkOrderDistance;
   }
   
-  
-  
   provinceFilter() {
-    this.municipioSelected = '';
-    this.municipioList = [];
-    this.provinceSelected.forEach(IDprovincia => {
-      this.municipioService.getMunicipiosByIdProvincia(IDprovincia).subscribe(respuesta => {
-      this.municipioList = this.municipioList.concat(respuesta);
-      this.filteredOptions = this.myControl.valueChanges.pipe(
-        startWith(''),
-        map(value => this._filter(value || '')),
-      );
+      this.municipioSelected = '';
+      this.municipioList = [];
+      this.provinceSelected.forEach(IDprovincia => {
+        this.municipioService.getMunicipiosByIdProvincia(IDprovincia).subscribe(respuesta => {
+        this.municipioList = this.municipioList.concat(respuesta);
+        this.filteredOptions = this.myControl.valueChanges.pipe(
+          startWith(''),
+          map(value => this._filter(value || '')),
+        );
+      });
     });
-  });
-  this.priceFilter();
-}
-
+    this.priceFilter();
+  }
 
   clearFilter() {
     this.provinceSelected = [];
@@ -223,7 +220,6 @@ export class ListadoGasolinerasComponent implements OnInit, OnDestroy {
 
   }
 
-  
   calcDistance(gas: Gasolinera) {
     const gasLong = this.toNumber(gas['Longitud (WGS84)']);
     const gasLat = this.toNumber(gas.Latitud);
@@ -238,7 +234,6 @@ export class ListadoGasolinerasComponent implements OnInit, OnDestroy {
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
     let d = R * c;
     return d;
-
   }
 
   convertToRad(value: number) {

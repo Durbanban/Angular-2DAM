@@ -1,10 +1,9 @@
 <div>
     <google-map [center]="userPos" [zoom]="zoomInput">
-        <map-marker #marker="mapMarker" *ngFor="let gas of gasolineras" [position]="getGasPosition(gas)" (mapClick)="openInfoWindow(marker)"></map-marker>
-   
-        <map-info-window>
-                <app-una-gasolinera [gasolinera]="gasStation"></app-una-gasolinera>
-        </map-info-window>
+        <map-marker-clusterer> 
+            <map-marker #marker="mapMarker" *ngFor="let gas of gasolineras" [position]="gas.Position" (mapClick)="openInfoWindow(marker, gas)"></map-marker>
+        </map-marker-clusterer>
+        <map-info-window><app-una-gasolinera [gasolinera]="gasStation"></app-una-gasolinera></map-info-window>
 
     </google-map>
 </div>
