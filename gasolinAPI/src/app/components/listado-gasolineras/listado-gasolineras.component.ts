@@ -37,11 +37,12 @@ export class ListadoGasolinerasComponent implements OnInit {
   checkOrderDistance = false;
   municipioSelected = '';
   fuel: keyof typeof this.fuelAttr = 'Precio Gasolina 95 E5';
-  userLong: number = 0;
-  userLat: number = 0;
   filteredOptions!: Observable<Municipio[]>;
   myControl = new FormControl('');
   userPosition: google.maps.LatLngLiteral = {} as google.maps.LatLngLiteral;
+  userLat = 0;
+  userLng = 0;
+  gasPosition: google.maps.LatLngLiteral = {} as google.maps.LatLngLiteral;
   mapZoom = 4;
   gasPositions: google.maps.LatLngLiteral[] = [];
   cluster: MapMarkerClusterer = {} as MapMarkerClusterer;
@@ -58,11 +59,12 @@ export class ListadoGasolinerasComponent implements OnInit {
       });
       this.gasListFiltered = this.gasList;
       this.fuelAttr = this.gasList[0];
+      this.gasPosition = {lat: 40.294514, lng: -4.129742};
+      this.priceFilter();
       this.provinciaService.getProvincias().subscribe(respuesta => {
         this.provinceList = respuesta;
       });
     });
-    this.priceFilter();
   }
   
   formatLabel(value: number) {
@@ -83,19 +85,20 @@ export class ListadoGasolinerasComponent implements OnInit {
         && gasolinera.Municipio.toLowerCase().includes(this.municipioSelected.toLowerCase()) 
         && this.provinceSelected.includes(gasolinera.IDProvincia));
       this.mapZoom = 11;
-      this.userPosition = {lat: this.toNumber(this.gasListFiltered[0].Latitud), lng: this.toNumber(this.gasListFiltered[0]['Longitud (WGS84)'])}
+      this.gasPosition = {lat: this.toNumber(this.gasListFiltered[0].Latitud), lng: this.toNumber(this.gasListFiltered[0]['Longitud (WGS84)'])}
     }else if(this.provinceSelected.length != 0 && this.municipioSelected == ''){
       this.gasListFiltered = this.gasList.filter((gasolinera) => 
         this.toNumber(gasolinera[this.fuel] as string) != 0 
         && this.toNumber(gasolinera[this.fuel] as string) <= this.precio 
         && this.provinceSelected.includes(gasolinera.IDProvincia));
       this.mapZoom= 8;
-      this.userPosition = {lat: this.toNumber(this.gasListFiltered[0].Latitud), lng: this.toNumber(this.gasListFiltered[0]['Longitud (WGS84)'])}
+      this.gasPosition = {lat: this.toNumber(this.gasListFiltered[0].Latitud), lng: this.toNumber(this.gasListFiltered[0]['Longitud (WGS84)'])}
     }else if(this.provinceSelected.length == 0 && this.municipioSelected == '') {
       this.gasListFiltered = this.gasList.filter((gasolinera) => 
         this.toNumber(gasolinera[this.fuel] as string) != 0 
         && this.toNumber(gasolinera[this.fuel] as string) <= this.precio);  
       this.mapZoom = 5;
+      this.gasPosition = {lat: 40.294514, lng: -4.129742}
     }    
   }
   
@@ -206,12 +209,12 @@ export class ListadoGasolinerasComponent implements OnInit {
   }
   
   getLocation(): void{
-    if(this.userLong == 0 && this.userLat == 0) {
+    if(this.userPosition.lat == 0 && this.userPosition.lng == 0) {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position)=>{
-          this.userLong = position.coords.longitude;
           this.userLat = position.coords.latitude;
-          this.userPosition = {lat: this.userLat, lng: this.userLong};
+          this.userLng = position.coords.longitude;
+          this.userPosition = {lat: this.userLat, lng: this.userLng};
         });
       }else {
         console.log("No support for geolocation")
@@ -225,7 +228,7 @@ export class ListadoGasolinerasComponent implements OnInit {
     const gasLat = this.toNumber(gas.Latitud);
     let R = 6371; // km
     let dLat = this.convertToRad(this.userLat-gasLat);
-    let dLon = this.convertToRad(this.userLong-gasLong);
+    let dLon = this.convertToRad(this.userLng-gasLong);
     let lat1 = this.convertToRad(gasLat);
     let lat2 = this.convertToRad(this.userLat);
 
