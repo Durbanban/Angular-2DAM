@@ -10,7 +10,7 @@ import { Gasolinera } from 'src/app/interfaces/gasolinera.interface';
 export class UnaGasolineraComponent implements OnInit {
 
   @Input() gasolinera: Gasolinera = {} as Gasolinera;
-  @Input() distance: number = 0;
+  @Input() distance?: number = 0;
   @Input() fuelChecker: number = 0;
   @Input() fuelType: keyof typeof this.gasolinera = 'Precio Gasolina 95 E5';
 

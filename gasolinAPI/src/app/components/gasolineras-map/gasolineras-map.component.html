@@ -1,9 +1,9 @@
 <div>
     <google-map [center]="gasPos" [zoom]="zoomInput">
-        <map-marker-clusterer> 
+        <map-marker-clusterer imagePath="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m1.png?_ga=2.25440445.-1273609795.1666972981"> 
             <map-marker #marker="mapMarker" *ngFor="let gas of gasolineras" [position]="gas.Position" (mapClick)="openInfoWindow(marker, gas)"></map-marker>
         </map-marker-clusterer>
-        <map-info-window><app-una-gasolinera [gasolinera]="gasStation" [distance]="calcDistance(gasStation)"></app-una-gasolinera></map-info-window>
+        <map-info-window><app-una-gasolinera [gasolinera]="gasStation" [distance]="gasStation.distancia"></app-una-gasolinera></map-info-window>
 
     </google-map>
 </div>

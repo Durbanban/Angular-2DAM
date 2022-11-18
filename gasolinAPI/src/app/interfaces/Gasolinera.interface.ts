@@ -33,6 +33,7 @@ export interface Gasolinera {
     IDProvincia: string;
     IDCCAA: string;
     Position: google.maps.LatLngLiteral;
+    distancia: number
 }
 
 export interface GasolineraResponse {

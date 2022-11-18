@@ -45,18 +45,20 @@ export class ListadoGasolinerasComponent implements OnInit {
   gasPosition: google.maps.LatLngLiteral = {} as google.maps.LatLngLiteral;
   mapZoom = 4;
   gasPositions: google.maps.LatLngLiteral[] = [];
-  cluster: MapMarkerClusterer = {} as MapMarkerClusterer;
+  
 
   
 
   ngOnInit(): void {
     this.getLocation();
     this.gasolineraService.getListadoGasolineras().subscribe((respuesta) => {
-      debugger;
       this.gasList = respuesta.ListaEESSPrecio;
+      /*
       this.gasList.forEach(gas => {
         gas.Position = {lat: Number(gas.Latitud.replace(',', '.')), lng: Number(gas['Longitud (WGS84)'].replace(',', '.'))};
+        gas.distancia = this.calcDistance(gas);
       });
+      */
       this.gasListFiltered = this.gasList;
       this.fuelAttr = this.gasList[0];
       this.gasPosition = {lat: 40.294514, lng: -4.129742};
@@ -67,6 +69,7 @@ export class ListadoGasolinerasComponent implements OnInit {
     });
   }
   
+
   formatLabel(value: number) {
     return value;
   }
@@ -85,21 +88,27 @@ export class ListadoGasolinerasComponent implements OnInit {
         && gasolinera.Municipio.toLowerCase().includes(this.municipioSelected.toLowerCase()) 
         && this.provinceSelected.includes(gasolinera.IDProvincia));
       this.mapZoom = 11;
-      this.gasPosition = {lat: this.toNumber(this.gasListFiltered[0].Latitud), lng: this.toNumber(this.gasListFiltered[0]['Longitud (WGS84)'])}
+      this.gasPosition = this.gasListFiltered[0].Position;
     }else if(this.provinceSelected.length != 0 && this.municipioSelected == ''){
       this.gasListFiltered = this.gasList.filter((gasolinera) => 
         this.toNumber(gasolinera[this.fuel] as string) != 0 
         && this.toNumber(gasolinera[this.fuel] as string) <= this.precio 
         && this.provinceSelected.includes(gasolinera.IDProvincia));
       this.mapZoom= 8;
-      this.gasPosition = {lat: this.toNumber(this.gasListFiltered[0].Latitud), lng: this.toNumber(this.gasListFiltered[0]['Longitud (WGS84)'])}
+      this.gasPosition = this.gasListFiltered[0].Position;
     }else if(this.provinceSelected.length == 0 && this.municipioSelected == '') {
       this.gasListFiltered = this.gasList.filter((gasolinera) => 
         this.toNumber(gasolinera[this.fuel] as string) != 0 
         && this.toNumber(gasolinera[this.fuel] as string) <= this.precio);  
       this.mapZoom = 5;
       this.gasPosition = {lat: 40.294514, lng: -4.129742}
-    }    
+    }
+  }
+
+  updateDistances() {
+    this.gasListFiltered.forEach(gas => {
+      gas.distancia = this.calcDistance(gas);
+    });
   }
   
   toNumber(cadena: string) {
@@ -154,9 +163,9 @@ export class ListadoGasolinerasComponent implements OnInit {
   
   sortByMaxDistance() {
     this.gasListFiltered = this.gasListFiltered.sort((gasStA, gasStB) => {
-      if(this.calcDistance(gasStA) < this.calcDistance(gasStB)) {
+      if(gasStA.distancia < gasStB.distancia) {
         return 1;
-      }else if (this.calcDistance(gasStA) > this.calcDistance(gasStB)) {
+      }else if (gasStA.distancia > gasStB.distancia) {
         return -1;
       }else {
         return 0;
@@ -169,9 +178,9 @@ export class ListadoGasolinerasComponent implements OnInit {
   
   sortByMinDistance() {
     this.gasListFiltered = this.gasListFiltered.sort((gasStA, gasStB) => {
-      if(this.calcDistance(gasStA) > this.calcDistance(gasStB)) {
+      if(gasStA.distancia > gasStB.distancia) {
         return 1;
-      }else if (this.calcDistance(gasStA) < this.calcDistance(gasStB)) {
+      }else if (gasStA.distancia < gasStB.distancia) {
         return -1;
       }else {
         return 0;
@@ -209,17 +218,18 @@ export class ListadoGasolinerasComponent implements OnInit {
   }
   
   getLocation(): void{
-    if(this.userPosition.lat == 0 && this.userPosition.lng == 0) {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position)=>{
-          this.userLat = position.coords.latitude;
-          this.userLng = position.coords.longitude;
-          this.userPosition = {lat: this.userLat, lng: this.userLng};
-        });
-      }else {
-        console.log("No support for geolocation")
-      }
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position)=>{
+        this.userLat = position.coords.latitude;
+        this.userLng = position.coords.longitude;
+        this.userPosition = {lat: this.userLat, lng: this.userLng};
+        console.log(this.userPosition);
+        
+      });
+    }else {
+      console.log("No support for geolocation")
     }
+    
 
   }
 
