@@ -53,7 +53,7 @@
 </div>
 <h1 *ngIf="gasListFiltered.length > 0">{{gasListFiltered.length}} gasolineras encontradas</h1>
 <div class="container">
-  <app-gasolineras-map [gasPos]="gasPosition" [zoomInput]="mapZoom" [marcadores]="gasPositions" [gasolineras]="gasListFiltered"></app-gasolineras-map>
+  <app-gasolineras-map [gasPos]="gasPosition" [zoomInput]="mapZoom" [gasolineras]="gasListFiltered"></app-gasolineras-map>
   <div class="container">
     <app-una-gasolinera *ngFor="let gas of gasListFiltered" [gasolinera]="gas" [distance]="gas.distancia" [fuelChecker]="checkFuel()" [fuelType]="fuel"></app-una-gasolinera>
     <h1 style="text-align: center;"*ngIf="gasListFiltered.length == 0" >No se encuentran gasolineras con los criterios de búsqueda</h1>

@@ -13,7 +13,6 @@ import { Gasolinera } from 'src/app/interfaces/gasolinera.interface';
 export class GasolinerasMapComponent implements OnInit {
 
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow = {} as MapInfoWindow;
-  @Input() marcadores: google.maps.LatLngLiteral[] = [];
   @Input() gasPos: google.maps.LatLngLiteral = {} as google.maps.LatLngLiteral;
   @Input() zoomInput: number = 0;
   @Input() gasolineras: Gasolinera[] = [];

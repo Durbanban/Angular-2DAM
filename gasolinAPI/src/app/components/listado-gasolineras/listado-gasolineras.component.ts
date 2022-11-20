@@ -52,13 +52,11 @@ export class ListadoGasolinerasComponent implements OnInit {
   ngOnInit(): void {
     this.getLocation();
     this.gasolineraService.getListadoGasolineras().subscribe((respuesta) => {
-      this.gasList = respuesta.ListaEESSPrecio;
-      /*
-      this.gasList.forEach(gas => {
+      respuesta.ListaEESSPrecio.forEach(gas => {
         gas.Position = {lat: Number(gas.Latitud.replace(',', '.')), lng: Number(gas['Longitud (WGS84)'].replace(',', '.'))};
         gas.distancia = this.calcDistance(gas);
+        this.gasList.push(gas);
       });
-      */
       this.gasListFiltered = this.gasList;
       this.fuelAttr = this.gasList[0];
       this.gasPosition = {lat: 40.294514, lng: -4.129742};
@@ -87,21 +85,24 @@ export class ListadoGasolinerasComponent implements OnInit {
         && this.toNumber(gasolinera[this.fuel] as string) <= this.precio 
         && gasolinera.Municipio.toLowerCase().includes(this.municipioSelected.toLowerCase()) 
         && this.provinceSelected.includes(gasolinera.IDProvincia));
-      this.mapZoom = 11;
-      this.gasPosition = this.gasListFiltered[0].Position;
+        this.gasPosition = this.gasListFiltered[0].Position;
+        this.updateDistances();
+        this.mapZoom = 11;
     }else if(this.provinceSelected.length != 0 && this.municipioSelected == ''){
       this.gasListFiltered = this.gasList.filter((gasolinera) => 
         this.toNumber(gasolinera[this.fuel] as string) != 0 
         && this.toNumber(gasolinera[this.fuel] as string) <= this.precio 
         && this.provinceSelected.includes(gasolinera.IDProvincia));
-      this.mapZoom= 8;
-      this.gasPosition = this.gasListFiltered[0].Position;
+        this.gasPosition = this.gasListFiltered[0].Position;
+        this.updateDistances();
+        this.mapZoom= 8;
     }else if(this.provinceSelected.length == 0 && this.municipioSelected == '') {
       this.gasListFiltered = this.gasList.filter((gasolinera) => 
         this.toNumber(gasolinera[this.fuel] as string) != 0 
         && this.toNumber(gasolinera[this.fuel] as string) <= this.precio);  
-      this.mapZoom = 5;
-      this.gasPosition = {lat: 40.294514, lng: -4.129742}
+        this.gasPosition = {lat: 40.294514, lng: -4.129742}
+        this.updateDistances();
+        this.mapZoom = 4;
     }
   }
 
