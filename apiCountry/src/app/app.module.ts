@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { OneCountryComponent } from './components/one-country/one-country.component';
 import { CountryListComponent } from './components/country-list/country-list.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialImportsModule } from './material-imports/material-imports.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialImportsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

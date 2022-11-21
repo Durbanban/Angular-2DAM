@@ -1,1 +1,5 @@
-<p>country-list works!</p>
+<h1>LISTA DE PAÍSES</h1>
+<div class = "countries">
+    <app-one-country *ngFor="let country of countryList" [country]="country"></app-one-country>
+</div>
+<h1>{{country.name}}</h1>
