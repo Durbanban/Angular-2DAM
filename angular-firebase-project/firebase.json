@@ -3,7 +3,7 @@
     "rules": "database.rules.json"
   },
   "hosting": {
-    "public": "dist/angular-firebase-project",
+    "public": "dist/angular-firebase-project-prod",
     "ignore": [
       "firebase.json",
       "**/.*",

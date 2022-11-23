@@ -5,15 +5,16 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: "AIzaSyBthqM5e3lODlVLzAai39i7IqJTMNcMsXI",
-    authDomain: "angular-firebase-project-ow.firebaseapp.com",
-    databaseURL: "https://angular-firebase-project-ow-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "angular-firebase-project-ow",
-    storageBucket: "angular-firebase-project-ow.appspot.com",
-    messagingSenderId: "122450572173",
-    appId: "1:122450572173:web:6a08c0e64bee2c690183c4",
-    measurementId: "G-T2QMFWSJRD"
-  }
+    apiKey: 'AIzaSyBthqM5e3lODlVLzAai39i7IqJTMNcMsXI',
+    authDomain: 'angular-firebase-project-ow.firebaseapp.com',
+    databaseURL: 'https://angular-firebase-project-ow-default-rtdb.europe-west1.firebasedatabase.app',
+    projectId: 'angular-firebase-project-ow',
+    storageBucket: 'angular-firebase-project-ow.appspot.com',
+    messagingSenderId: '122450572173',
+    appId: '1:122450572173:web:6a08c0e64bee2c690183c4',
+    measurementId: 'G-T2QMFWSJRD'
+  },
+  title: 'AngularFirebaseProject!!'
 };
 
 /*
